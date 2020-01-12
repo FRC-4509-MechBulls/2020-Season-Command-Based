@@ -14,6 +14,7 @@ public class DirectDriveCommand extends CommandBase {
 	private final DoubleSupplier forward;
 	private final DoubleSupplier rotation;
 
+
 	public DirectDriveCommand(DrivingSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		dSub = subsystem;
