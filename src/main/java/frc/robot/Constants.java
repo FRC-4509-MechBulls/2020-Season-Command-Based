@@ -27,12 +27,7 @@ public class Constants {
 	public static final int XBOX_CONTROLLER_1_PORT = 0;
     public static final int XBOX_CONTROLLER_2_PORT = 1;
 
-	public static final Encoder leftEncoder = new Encoder(0,1);
-	public static final Encoder rightEncoder = new Encoder(2,3);
-
-	public static final WPI_TalonSRX elevatorTalon = new WPI_TalonSRX(2);
-	public static final double encoderDiameter = 0.5; //in feet
-	public static final double encoderDistance = encoderDiameter*3.14/1024;
+	
 
 
 	

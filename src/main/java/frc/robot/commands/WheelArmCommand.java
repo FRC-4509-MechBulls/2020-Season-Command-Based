@@ -11,9 +11,9 @@ public class WheelArmCommand extends CommandBase {
 	private ArmSubsystem armSubsystem;
 	DoubleSupplier wheelTurn;
 	
-	public WheelArmCommand(ArmSubsystem subsystem, DoubleSupplier w) {
+	public WheelArmCommand(ArmSubsystem subsystem, DoubleSupplier wheelTurn) {
 		armSubsystem=subsystem;
-		wheelTurn = w;
+		this.wheelTurn = wheelTurn;
 		addRequirements(armSubsystem);
 	}
 
