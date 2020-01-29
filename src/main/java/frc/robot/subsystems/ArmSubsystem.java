@@ -7,7 +7,8 @@ import frc.robot.Constants;
 
 // Controls the drive motors
 public class ArmSubsystem extends SubsystemBase {
-    public static double baseGrabberSpeed = 0.95;
+	public static double baseGrabberSpeed = 0.95;
+	//uiuijijpoijijpopoji
 	public static WPI_TalonSRX grabberTalon;
   
     public void set(double speed) {
