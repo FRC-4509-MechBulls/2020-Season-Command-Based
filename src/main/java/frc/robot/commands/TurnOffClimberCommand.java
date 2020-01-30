@@ -8,15 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 import frc.robot.subsystems.ClimberSubsystem;
 
-public class ClimberCommand extends CommandBase {
+
+public class TurnOffClimberCommand extends CommandBase {
   /**
    * Creates a new ClimberCommand.
    */
   ClimberSubsystem climberSubsystem;
-  public ClimberCommand(ClimberSubsystem subsystem) {
+  public TurnOffClimberCommand(ClimberSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     climberSubsystem = subsystem;
     addRequirements(climberSubsystem);
@@ -30,7 +36,7 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climberSubsystem.enable();
+    climberSubsystem.disable();
     
   }
 
@@ -46,3 +52,4 @@ public class ClimberCommand extends CommandBase {
     return false;
   }
 }
+
