@@ -19,7 +19,7 @@ public class IntakeCommand extends CommandBase {
     intakeSubsystem = subsystem;
     addRequirements(intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-  }
+  } 
 
   // Called when the command is initially scheduled.
   @Override
