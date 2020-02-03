@@ -7,16 +7,22 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterOnCommand extends CommandBase {
+
+private final DoubleSupplier spin; 
+
   /**
    * Creates a new ShooterOnCommand.
    */
   ShooterSubsystem shooterSubsystem;
-  public ShooterOnCommand(ShooterSubsystem subsystem) {
+  public ShooterOnCommand(ShooterSubsystem subsystem, DoubleSupplier spin) {
     shooterSubsystem = subsystem;
+    this.spin = spin;
     addRequirements(shooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   } 
@@ -29,7 +35,7 @@ public class ShooterOnCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.enable();
+    shooterSubsystem.enable(spin.getAsDouble()); 
   }
 
   // Called once the command ends or is interrupted.

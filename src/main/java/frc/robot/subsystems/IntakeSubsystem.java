@@ -16,7 +16,9 @@ public class IntakeSubsystem extends SubsystemBase {
   /**
    * Creates a new IntakeSubsystem.
    */
-  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(3);
+
+  WPI_TalonSRX intakeMotorA = new WPI_TalonSRX(3);
+  WPI_TalonSRX intakeMotorB = new WPI_TalonSRX(3);
 
   public IntakeSubsystem() {
 
@@ -27,13 +29,10 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void enable(){
-    intakeMotor.set(0.5);
-    Constants.intakeSolenoid.set(true);
-  }
-  public void disable(){
-    intakeMotor.set(0);
-    Constants.intakeSolenoid.set(false);
+public void enable(double n){
+intakeMotorA.set(n);
+intakeMotorB.set(-n);
 
   }
 }
+

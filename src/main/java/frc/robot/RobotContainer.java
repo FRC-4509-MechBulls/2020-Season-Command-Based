@@ -8,13 +8,19 @@ import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.DirectDriveCommand;
 import frc.robot.commands.InactiveColorCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.SetIntakeOffCommand;
+
+import frc.robot.commands.ShooterOnCommand;
+
+
+
 import frc.robot.commands.TurnOffClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
 import frc.robot.subsystems.WomfSubsystem;
+
 
 public class RobotContainer {
 
@@ -27,7 +33,9 @@ public class RobotContainer {
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
     WomfSubsystem womfSubsystem = new WomfSubsystem();
+
     ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     public RobotContainer(){
@@ -38,6 +46,16 @@ public class RobotContainer {
                 drivingSubsystem,
                 () -> getDrive(),
                 () -> getTurn()));
+        
+        shooterSubsystem.setDefaultCommand(
+            new ShooterOnCommand(
+                shooterSubsystem,
+                () -> getShooter()));
+    
+        intakeSubsystem.setDefaultCommand(
+            new IntakeCommand(
+                intakeSubsystem,
+                () -> getIntake()));
      
 
        
@@ -51,15 +69,22 @@ public class RobotContainer {
 		double n = controller1.getTriggerAxis(GenericHID.Hand.kRight) - controller1.getTriggerAxis(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
 	}
+    
+    public double getShooter() {
+        double n = controller2.getTriggerAxis(GenericHID.Hand.kRight);
+		return Math.abs(n) < 0.1 ? 0 : n;
+    }
 
+    public double getIntake() {
+        double n = controller2.getTriggerAxis(GenericHID.Hand.kLeft);
+		return Math.abs(n) < 0.1 ? 0 : n;
+    }
 
     private void configureButtonBindings() {
-        final JoystickButton intakeButton = new JoystickButton(controller2, XboxController.Button.kA.value);
-        final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kX.value);
-        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kY.value);
+        final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
+        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);
 
-        intakeButton.whenPressed(new IntakeCommand(intakeSubsystem));
-        intakeButton.whenReleased(new SetIntakeOffCommand(intakeSubsystem));
+        final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kX.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
         colorButton.whenPressed(new ActiveColorCommand(womfSubsystem));
