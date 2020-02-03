@@ -10,11 +10,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /**
    * Creates a new IntakeSubsystem.
    */
+
   WPI_TalonSRX intakeMotorA = new WPI_TalonSRX(3);
   WPI_TalonSRX intakeMotorB = new WPI_TalonSRX(3);
 
@@ -27,14 +29,10 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void enable(double n){
+public void enable(double n){
 intakeMotorA.set(n);
 intakeMotorB.set(-n);
 
   }
-  public void disable(){
-    intakeMotorA.set(0);
-    intakeMotorB.set(0);
-
-  }
 }
+

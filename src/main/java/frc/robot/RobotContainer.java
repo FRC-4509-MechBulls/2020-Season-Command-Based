@@ -3,18 +3,24 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ActiveColorCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.DirectDriveCommand;
+import frc.robot.commands.InactiveColorCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.SetEncoderCommand;
+
 import frc.robot.commands.ShooterOnCommand;
+
+
+
 import frc.robot.commands.TurnOffClimberCommand;
-import frc.robot.commands.TurnoffEncoderCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.EncoderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import frc.robot.subsystems.WomfSubsystem;
+
 
 public class RobotContainer {
 
@@ -25,9 +31,11 @@ public class RobotContainer {
    
 
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
-    EncoderSubsystem encoderSubsystem = new EncoderSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+    WomfSubsystem womfSubsystem = new WomfSubsystem();
+
     ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     public RobotContainer(){
@@ -52,7 +60,7 @@ public class RobotContainer {
 
        
     }
-  
+
     public double getTurn() {
 		double n = controller1.getX(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
@@ -74,13 +82,14 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
-       
+        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);
+
         final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kX.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
+        colorButton.whenPressed(new ActiveColorCommand(womfSubsystem));
+        colorButton.whenReleased(new InactiveColorCommand(womfSubsystem));
 
-        encoderButton.whenPressed(new SetEncoderCommand(encoderSubsystem));
-        encoderButton.whenReleased(new TurnoffEncoderCommand(encoderSubsystem));
     }
   
   

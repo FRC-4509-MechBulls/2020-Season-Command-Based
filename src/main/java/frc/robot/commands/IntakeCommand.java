@@ -40,6 +40,7 @@ private final DoubleSupplier spin;
   @Override
   public void execute() {
     intakeSubsystem.enable(spin.getAsDouble()); 
+
   }
 
   // Called once the command ends or is interrupted.

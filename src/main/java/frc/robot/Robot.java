@@ -8,15 +8,18 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.EncoderSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,16 +31,24 @@ import frc.robot.subsystems.EncoderSubsystem;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   public static final DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
-  public static EncoderSubsystem encoderSubsystem = new EncoderSubsystem();
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
-  public static RobotContainer oi;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
   WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
-  RobotContainer OI = new RobotContainer();
-  public DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
+  static RobotContainer oi = new RobotContainer();
 
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+
+  /**
+   * A Rev Color Sensor V3 object is constructed with an I2C port as a parameter.
+   * The device will be automatically initialized with default parameters.
+   */
+  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+  private final Color kRedTarget = ColorMatch.makeColor(0.531, 0.343, 0.14);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.31597, 0.57, 0.11425);
+  private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -49,12 +60,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    encoderSubsystem.leftEncoder.setDistancePerPulse(encoderSubsystem.encoderDistance);
-    encoderSubsystem.rightEncoder.setDistancePerPulse(encoderSubsystem.encoderDistance);
-    // Constants.rightEncoder.reset();
-    // Constants.leftEncoder.reset();
-    drivingSubsystem.initDrive();
-    encoderSubsystem.initEncoder();
+
 
   }
 
@@ -103,8 +109,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    SmartDashboard.putNumber("encoder value right", Math.abs(encoderSubsystem.rightEncoder.get()));
-    SmartDashboard.putNumber("encoder value left", Math.abs(encoderSubsystem.leftEncoder.get()));
+
     // // Assuming no wheel slip, the difference in encoder distances is
     // proportional to the heading error
     // double error = Constants.leftEncoder.getDistance() -

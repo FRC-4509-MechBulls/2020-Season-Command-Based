@@ -7,19 +7,26 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.EncoderSubsystem;
+import frc.robot.subsystems.WomfSubsystem;
 
-public class TurnoffEncoderCommand extends CommandBase {
+public class InactiveColorCommand extends CommandBase {
   /**
-   * Creates a new SetEncoderCommand.
+   * Creates a new TurnOffMotorCommand.
    */
+  WomfSubsystem controlPanelSubsystem;
 
-  private final EncoderSubsystem encoderSubsystem;
-  public TurnoffEncoderCommand(EncoderSubsystem subsystem) {
+  public InactiveColorCommand(WomfSubsystem subsystem) {
+    controlPanelSubsystem = subsystem;
+    addRequirements(controlPanelSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-    encoderSubsystem = subsystem;
-    addRequirements(encoderSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -30,9 +37,8 @@ public class TurnoffEncoderCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-      encoderSubsystem.stop();
-    
+    controlPanelSubsystem.disable();
+ 
   }
 
   // Called once the command ends or is interrupted.
