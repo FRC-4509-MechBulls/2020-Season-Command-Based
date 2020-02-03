@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.EncoderSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +27,6 @@ import frc.robot.subsystems.EncoderSubsystem;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   public static final DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
-  public static EncoderSubsystem encoderSubsystem = new EncoderSubsystem();
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   public static RobotContainer oi;
@@ -49,12 +47,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    encoderSubsystem.leftEncoder.setDistancePerPulse(encoderSubsystem.encoderDistance);
-    encoderSubsystem.rightEncoder.setDistancePerPulse(encoderSubsystem.encoderDistance);
-    // Constants.rightEncoder.reset();
-    // Constants.leftEncoder.reset();
-    drivingSubsystem.initDrive();
-    encoderSubsystem.initEncoder();
+
 
   }
 
@@ -103,8 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    SmartDashboard.putNumber("encoder value right", Math.abs(encoderSubsystem.rightEncoder.get()));
-    SmartDashboard.putNumber("encoder value left", Math.abs(encoderSubsystem.leftEncoder.get()));
+
     // // Assuming no wheel slip, the difference in encoder distances is
     // proportional to the heading error
     // double error = Constants.leftEncoder.getDistance() -
