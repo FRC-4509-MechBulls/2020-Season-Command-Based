@@ -6,13 +6,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.DirectDriveCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.SetEncoderCommand;
 import frc.robot.commands.SetIntakeOffCommand;
 import frc.robot.commands.TurnOffClimberCommand;
-import frc.robot.commands.TurnoffEncoderCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.EncoderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class RobotContainer {
@@ -24,7 +21,6 @@ public class RobotContainer {
    
 
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
-    EncoderSubsystem encoderSubsystem = new EncoderSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public RobotContainer(){
@@ -56,7 +52,6 @@ public class RobotContainer {
         return controller2.getYButton();
     }
     private void configureButtonBindings() {
-        final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
         final JoystickButton intakeButton = new JoystickButton(controller2, XboxController.Button.kA.value);
         intakeButton.whenPressed(new IntakeCommand(intakeSubsystem));
         intakeButton.whenReleased(new SetIntakeOffCommand(intakeSubsystem));
@@ -64,8 +59,7 @@ public class RobotContainer {
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
 
-        encoderButton.whenPressed(new SetEncoderCommand(encoderSubsystem));
-        encoderButton.whenReleased(new TurnoffEncoderCommand(encoderSubsystem));
+
     }
   
   
