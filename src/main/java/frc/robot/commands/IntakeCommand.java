@@ -30,6 +30,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     intakeSubsystem.enable();
+    
   }
 
   // Called once the command ends or is interrupted.
