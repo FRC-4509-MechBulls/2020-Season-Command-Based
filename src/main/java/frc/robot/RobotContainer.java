@@ -7,13 +7,14 @@ import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.DirectDriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.SetEncoderCommand;
-import frc.robot.commands.SetIntakeOffCommand;
+import frc.robot.commands.ShooterOnCommand;
 import frc.robot.commands.TurnOffClimberCommand;
 import frc.robot.commands.TurnoffEncoderCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.EncoderSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
 
@@ -27,6 +28,8 @@ public class RobotContainer {
     EncoderSubsystem encoderSubsystem = new EncoderSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+
     public RobotContainer(){
         configureButtonBindings();
 
@@ -35,6 +38,16 @@ public class RobotContainer {
                 drivingSubsystem,
                 () -> getDrive(),
                 () -> getTurn()));
+        
+        shooterSubsystem.setDefaultCommand(
+            new ShooterOnCommand(
+                shooterSubsystem,
+                () -> getShooter()));
+    
+        intakeSubsystem.setDefaultCommand(
+            new IntakeCommand(
+                intakeSubsystem,
+                () -> getIntake()));
      
 
        
@@ -48,18 +61,20 @@ public class RobotContainer {
 		double n = controller1.getTriggerAxis(GenericHID.Hand.kRight) - controller1.getTriggerAxis(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
 	}
-    public double getArm(){
-        double n = controller2.getY(GenericHID.Hand.kRight);
+    
+    public double getShooter() {
+        double n = controller2.getTriggerAxis(GenericHID.Hand.kRight);
 		return Math.abs(n) < 0.1 ? 0 : n;
     }
-    public boolean setEncoder(){
-        return controller2.getYButton();
+
+    public double getIntake() {
+        double n = controller2.getTriggerAxis(GenericHID.Hand.kLeft);
+		return Math.abs(n) < 0.1 ? 0 : n;
     }
+
     private void configureButtonBindings() {
         final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
-        final JoystickButton intakeButton = new JoystickButton(controller2, XboxController.Button.kA.value);
-        intakeButton.whenPressed(new IntakeCommand(intakeSubsystem));
-        intakeButton.whenReleased(new SetIntakeOffCommand(intakeSubsystem));
+       
         final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kX.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));

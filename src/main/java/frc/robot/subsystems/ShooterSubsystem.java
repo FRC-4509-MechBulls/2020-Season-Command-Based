@@ -26,13 +26,14 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void enable(){
-  shooterMotorA.set(0.5);
-  shooterMotorB.set(-0.5);
+  public void enable(double n){
+  shooterMotorA.set(n);
+  shooterMotorB.set(-n);
   }
   
   public void disable(){
   shooterMotorA.set(0);  
   shooterMotorB.set(0);
   }
+
 }

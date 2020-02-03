@@ -7,19 +7,29 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
+
+private final DoubleSupplier spin; 
   /**
    * Creates a new IntakeCommand.
    */
   IntakeSubsystem intakeSubsystem;
-  public IntakeCommand(IntakeSubsystem subsystem) {
+  public IntakeCommand(IntakeSubsystem subsystem, DoubleSupplier spin) {
     intakeSubsystem = subsystem;
+    this.spin = spin;
     addRequirements(intakeSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
-  } 
+
+
+
+
+}
+
 
   // Called when the command is initially scheduled.
   @Override
@@ -29,7 +39,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.enable();
+    intakeSubsystem.enable(spin.getAsDouble()); 
   }
 
   // Called once the command ends or is interrupted.
