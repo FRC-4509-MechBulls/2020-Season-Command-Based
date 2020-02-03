@@ -12,7 +12,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class SetIntakeOffCommand extends CommandBase {
   /**
-   * Creates a new SetIntakeOffCommand.
+   * Creates a new SetIntakeOffCommand. 
    */
   IntakeSubsystem intakeSubsystem;
   public SetIntakeOffCommand(IntakeSubsystem subsystem) {
