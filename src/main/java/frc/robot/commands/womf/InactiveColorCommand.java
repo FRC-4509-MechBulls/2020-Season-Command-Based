@@ -5,24 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.womf;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.WomfSubsystem;
 
-public class ActiveColorCommand extends CommandBase {
+public class InactiveColorCommand extends CommandBase {
   /**
    * Creates a new TurnOffMotorCommand.
    */
   WomfSubsystem controlPanelSubsystem;
-  public ActiveColorCommand(WomfSubsystem subsystem) {
+
+  public InactiveColorCommand(WomfSubsystem subsystem) {
     controlPanelSubsystem = subsystem;
     addRequirements(controlPanelSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,7 +30,7 @@ public class ActiveColorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    controlPanelSubsystem.stage2();
+    controlPanelSubsystem.disable();
  
   }
 

@@ -5,27 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 
-public class ShooterOnCommand extends CommandBase {
-
-private final DoubleSupplier spin; 
-
+public class ClimberCommand extends CommandBase {
   /**
-   * Creates a new ShooterOnCommand.
+   * Creates a new ClimberCommand.
    */
-  ShooterSubsystem shooterSubsystem;
-  public ShooterOnCommand(ShooterSubsystem subsystem, DoubleSupplier spin) {
-    shooterSubsystem = subsystem;
-    this.spin = spin;
-    addRequirements(shooterSubsystem);
+  ClimberSubsystem climberSubsystem;
+  public ClimberCommand(ClimberSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-  } 
+    climberSubsystem = subsystem;
+    addRequirements(climberSubsystem);
+  }
 
   // Called when the command is initially scheduled.
   @Override
@@ -35,12 +29,14 @@ private final DoubleSupplier spin;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.enable(spin.getAsDouble()); 
+    climberSubsystem.enable();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.

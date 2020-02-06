@@ -5,30 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.tilt;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
+import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.WomfSubsystem;
+import frc.robot.subsystems.CannonTiltSubsystem;
 
-public class InactiveColorCommand extends CommandBase {
+public class CannonTiltCommand extends CommandBase {
   /**
-   * Creates a new TurnOffMotorCommand.
+   * Creates a new CannonTiltCommand.
    */
-  WomfSubsystem controlPanelSubsystem;
+  private final DoubleSupplier tilt; 
+  /**
+   * Creates a new IntakeCommand.
+   */
+  CannonTiltSubsystem cannonTiltSubsystem;
+  public CannonTiltCommand(CannonTiltSubsystem subsystem, DoubleSupplier tilt) {
+    cannonTiltSubsystem = subsystem;
+    this.tilt = tilt;
+    addRequirements(cannonTiltSubsystem);
 
-  public InactiveColorCommand(WomfSubsystem subsystem) {
-    controlPanelSubsystem = subsystem;
-    addRequirements(controlPanelSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
 
+
+
+}
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -37,8 +38,7 @@ public class InactiveColorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    controlPanelSubsystem.disable();
- 
+    cannonTiltSubsystem.tilt(tilt.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

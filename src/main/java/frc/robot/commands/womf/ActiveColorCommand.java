@@ -5,21 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.womf;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.WomfSubsystem;
 
-public class ClimberCommand extends CommandBase {
+public class ActiveColorCommand extends CommandBase {
   /**
-   * Creates a new ClimberCommand.
+   * Creates a new TurnOffMotorCommand.
    */
-  ClimberSubsystem climberSubsystem;
-  public ClimberCommand(ClimberSubsystem subsystem) {
+  WomfSubsystem controlPanelSubsystem;
+  public ActiveColorCommand(WomfSubsystem subsystem) {
+    controlPanelSubsystem = subsystem;
+    addRequirements(controlPanelSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-    climberSubsystem = subsystem;
-    addRequirements(climberSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -30,14 +29,13 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climberSubsystem.enable();
-    
+    controlPanelSubsystem.stage2();
+ 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.
