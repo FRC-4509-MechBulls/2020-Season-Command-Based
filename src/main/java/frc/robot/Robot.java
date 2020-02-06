@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 
 /**
@@ -37,7 +38,7 @@ public class Robot extends TimedRobot {
   WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
   WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
   static RobotContainer oi = new RobotContainer();
-
+  CannonTiltSubsystem cannonTilt = new CannonTiltSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
   /**
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Robot.oi = new RobotContainer();
-
+    cannonTilt.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);

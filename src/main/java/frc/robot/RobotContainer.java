@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ActiveColorCommand;
+import frc.robot.commands.CannonTiltCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.DirectDriveCommand;
 import frc.robot.commands.InactiveColorCommand;
@@ -14,6 +15,7 @@ import frc.robot.commands.ShooterOnCommand;
 
 
 import frc.robot.commands.TurnOffClimberCommand;
+import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -32,10 +34,9 @@ public class RobotContainer {
 
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+    CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
     WomfSubsystem womfSubsystem = new WomfSubsystem();
-
     ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     public RobotContainer(){
@@ -56,7 +57,10 @@ public class RobotContainer {
             new IntakeCommand(
                 intakeSubsystem,
                 () -> getIntake()));
-     
+        cannonTiltSubsystem.setDefaultCommand(
+            new CannonTiltCommand(
+                cannonTiltSubsystem,
+                () -> getTilt()));
 
        
     }
@@ -79,7 +83,10 @@ public class RobotContainer {
         double n = controller2.getTriggerAxis(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
     }
-
+    public double getTilt(){
+        double n = controller2.getX(GenericHID.Hand.kLeft);
+		return Math.abs(n) < 0.1 ? 0 : n;
+    }
     private void configureButtonBindings() {
         final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
         final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);

@@ -5,5 +5,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "2020-Season New Command Based",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project 2020-Season-Command-Based)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "2020-Season-Command-Based",
+    "language": "java"
   }
 ]

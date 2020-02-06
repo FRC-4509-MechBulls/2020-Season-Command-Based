@@ -12,29 +12,27 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class CannonTiltSubsystem extends SubsystemBase {
   /**
-   * Creates a new IntakeSubsystem.
+   * Creates a new CannonTiltSubsystem.
    */
-
-  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(3);
-
-  public IntakeSubsystem() {
+  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(3);
+  public CannonTiltSubsystem() {
 
   }
+  public void init(){
+    cannonMotor.configReverseSoftLimitThreshold((int) (0 / Constants.kCannonTick2Deg), 10);
+    cannonMotor.configForwardSoftLimitThreshold((int) (175 / Constants.kCannonTick2Deg), 10);
 
+    cannonMotor.configReverseSoftLimitEnable(true, 10);
+    cannonMotor.configForwardSoftLimitEnable(true, 10);
+  }
+
+  public void tilt(double n){
+    cannonMotor.set(n);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-
-  public void enable(double n) {
-    intakeMotor.set(n);
-    if (n > 0.0) {
-      Constants.intakeSolenoid.set(true);
-
-    } else {
-      Constants.intakeSolenoid.set(false);
-    }
   }
 }
