@@ -13,8 +13,10 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class WomfSubsystem extends SubsystemBase {
   /**
@@ -57,8 +59,18 @@ public class WomfSubsystem extends SubsystemBase {
     // _motor.setInverted(true);
   }
   public void stage1(){
-
-    
+    Constants.setpointWomf = 50;
+    double sensorPosition = _motor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    double error = Constants.setpointWomf - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+    if (Math.abs(error) < Constants.iLimitWomf) {
+      Constants.errorSumWomf += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorWomf) / dt;
+    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+    _motor.set(outputSpeed);
+    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+    Constants.lastErrorWomf = error;
   }
   public void stage2() {
 

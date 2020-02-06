@@ -5,31 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CannonTiltSubsystem;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+import frc.robot.subsystems.ClimberSubsystem;
 
-public class CannonTiltCommand extends CommandBase {
+
+public class TurnOffClimberCommand extends CommandBase {
   /**
-   * Creates a new CannonTiltCommand.
+   * Creates a new ClimberCommand.
    */
-  private final DoubleSupplier tilt; 
-  /**
-   * Creates a new IntakeCommand.
-   */
-  CannonTiltSubsystem cannonTiltSubsystem;
-  public CannonTiltCommand(CannonTiltSubsystem subsystem, DoubleSupplier tilt) {
-    cannonTiltSubsystem = subsystem;
-    this.tilt = tilt;
-    addRequirements(cannonTiltSubsystem);
+  ClimberSubsystem climberSubsystem;
+  public TurnOffClimberCommand(ClimberSubsystem subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    climberSubsystem = subsystem;
+    addRequirements(climberSubsystem);
+  }
 
-
-
-
-}
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -38,12 +36,14 @@ public class CannonTiltCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.tilt(tilt.getAsDouble());
+    climberSubsystem.disable();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.
@@ -52,3 +52,4 @@ public class CannonTiltCommand extends CommandBase {
     return false;
   }
 }
+

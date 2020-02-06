@@ -3,24 +3,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ActiveColorCommand;
-import frc.robot.commands.CannonTiltCommand;
-import frc.robot.commands.ClimberCommand;
-import frc.robot.commands.DirectDriveCommand;
-import frc.robot.commands.InactiveColorCommand;
-import frc.robot.commands.IntakeCommand;
-
-import frc.robot.commands.ShooterOnCommand;
-
-
-
-import frc.robot.commands.TurnOffClimberCommand;
+import frc.robot.commands.womf.ActiveColorCommand;
+import frc.robot.commands.tilt.CannonTiltCommand;
+import frc.robot.commands.climber.ClimberCommand;
+import frc.robot.commands.driving.DirectDriveCommand;
+import frc.robot.commands.womf.InactiveColorCommand;
+import frc.robot.commands.intake.IntakeCommand;
+import frc.robot.commands.shooter.ShooterOnCommand;
+import frc.robot.commands.climber.TurnOffClimberCommand;
 import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-
 import frc.robot.subsystems.WomfSubsystem;
 
 

@@ -7,9 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -32,7 +29,15 @@ public class Constants {
 	public static Solenoid climberSolenoid = new Solenoid(CLIMBER_SOLENOID_PORT);
 	public static Solenoid intakeSolenoid = new Solenoid(INTAKE_SOLENOID_PORT);
 	public static final double kCannonTick2Deg = 360.0 / 512 * 26 / 42 * 18 / 60 * 18 / 84;
-
+	public static final double kPWomf = 0.5;
+    public static final double kIWomf = 0.4;
+    public static final double kDWomf = 0.1;
+    public static final double iLimitWomf = 1;
+    public static final double kTick2Feet4Womf = 1.0 / 128 * 6 * Math.PI / 12;
+    public static double setpointWomf = 0;
+    public static double errorSumWomf = 0;
+    public static double lastTimestampWomf = 0;
+    public static double lastErrorWomf = 0;
 
 
 	
