@@ -31,6 +31,8 @@ public class Constants {
 	public static final int INTAKE_SOLENOID_PORT = 10;
 	public static Solenoid climberSolenoid = new Solenoid(CLIMBER_SOLENOID_PORT);
 	public static Solenoid intakeSolenoid = new Solenoid(INTAKE_SOLENOID_PORT);
+	public static final double kCannonTick2Deg = 360.0 / 512 * 26 / 42 * 18 / 60 * 18 / 84;
+
 
 
 	

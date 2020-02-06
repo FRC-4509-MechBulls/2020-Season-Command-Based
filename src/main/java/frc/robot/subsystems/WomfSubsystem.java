@@ -56,8 +56,11 @@ public class WomfSubsystem extends SubsystemBase {
     // _motor.setSensorPhase(true);
     // _motor.setInverted(true);
   }
+  public void stage1(){
 
-  public void identify() {
+    
+  }
+  public void stage2() {
 
     Color detectedColor = colorSensor.getColor();
     int proximity = colorSensor.getProximity();
