@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
+import frc.robot.subsystems.WomfSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
   static RobotContainer oi = new RobotContainer();
   CannonTiltSubsystem cannonTilt = new CannonTiltSubsystem();
+  WomfSubsystem womfSubsystem = new WomfSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
   /**
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
   private final Color kRedTarget = ColorMatch.makeColor(0.531, 0.343, 0.14);
   private final Color kYellowTarget = ColorMatch.makeColor(0.31597, 0.57, 0.11425);
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -56,11 +59,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Robot.oi = new RobotContainer();
+    womfSubsystem.colorMatcher.setConfidenceThreshold(1.0);
+    womfSubsystem.colorMatcher.addColorMatch(kBlueTarget);
+    womfSubsystem.colorMatcher.addColorMatch(kGreenTarget);
+    womfSubsystem.colorMatcher.addColorMatch(kRedTarget);
+    womfSubsystem.colorMatcher.addColorMatch(kYellowTarget);
     cannonTilt.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
 
   }
 
@@ -141,27 +148,30 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
     String gameData;
     gameData = DriverStation.getInstance().getGameSpecificMessage();
     if (gameData.length() > 0) {
       switch (gameData.charAt(0)) {
       case 'B':
-        // Blue case code
+        womfSubsystem.targetColor = kBlueTarget;
         SmartDashboard.putString("Blue", "B");
         break;
       case 'G':
+        womfSubsystem.targetColor = kGreenTarget;
+
         // Green case code
         SmartDashboard.putString("Green", "G");
 
         break;
       case 'R':
-        // Red case code
+        womfSubsystem.targetColor = kRedTarget;
+
         SmartDashboard.putString("Red", "R");
 
         break;
       case 'Y':
-        // Yellow case code
+        womfSubsystem.targetColor = kYellowTarget;
+
         SmartDashboard.putString("Yellow", "Y");
 
         break;
