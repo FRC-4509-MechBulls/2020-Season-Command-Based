@@ -5,31 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import java.util.function.DoubleSupplier;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class IntakeCommand extends CommandBase {
+public class ShooterOnCommand extends CommandBase {
 
 private final DoubleSupplier spin; 
+
   /**
-   * Creates a new IntakeCommand.
+   * Creates a new ShooterOnCommand.
    */
-  IntakeSubsystem intakeSubsystem;
-  public IntakeCommand(IntakeSubsystem subsystem, DoubleSupplier spin) {
-    intakeSubsystem = subsystem;
+  ShooterSubsystem shooterSubsystem;
+  public ShooterOnCommand(ShooterSubsystem subsystem, DoubleSupplier spin) {
+    shooterSubsystem = subsystem;
     this.spin = spin;
-    addRequirements(intakeSubsystem);
-
-
-
-
-}
-
+    addRequirements(shooterSubsystem);
+    // Use addRequirements() here to declare subsystem dependencies.
+  } 
 
   // Called when the command is initially scheduled.
   @Override
@@ -39,8 +35,7 @@ private final DoubleSupplier spin;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.enable(spin.getAsDouble()); 
-
+    shooterSubsystem.enable(spin.getAsDouble()); 
   }
 
   // Called once the command ends or is interrupted.
