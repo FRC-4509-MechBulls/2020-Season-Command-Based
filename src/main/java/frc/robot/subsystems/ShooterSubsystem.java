@@ -31,8 +31,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void enable(double n){
   shooterMotorA.set(n);
   shooterMotorB.set(-n);
-  shooterMotorC.set(n);
-  shooterMotorD.set(-n);
+  shooterMotorC.set(n/4);
+  shooterMotorD.set(-n/4);
   }
   
   public void disable(){
