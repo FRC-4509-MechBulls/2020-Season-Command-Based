@@ -15,10 +15,11 @@ public class ShooterSubsystem extends SubsystemBase {
   /**
    * Creates a new ShooterSubsystem.
    */
-  WPI_TalonSRX shooterMotorA = new WPI_TalonSRX(3);
-  WPI_TalonSRX shooterMotorB = new WPI_TalonSRX(3);
-  WPI_TalonSRX shooterMotorC = new WPI_TalonSRX(3);
-  WPI_TalonSRX shooterMotorD = new WPI_TalonSRX(3);
+
+  WPI_TalonSRX shooterMotorA = new WPI_TalonSRX(8);
+  WPI_TalonSRX shooterMotorB = new WPI_TalonSRX(1);
+  WPI_TalonSRX shooterMotorC = new WPI_TalonSRX(5);
+  WPI_TalonSRX shooterMotorD = new WPI_TalonSRX(7);
   public ShooterSubsystem() {
 
   }
@@ -31,8 +32,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void enable(double n){
   shooterMotorA.set(n);
   shooterMotorB.set(-n);
-  shooterMotorC.set(n/4);
-  shooterMotorD.set(-n/4);
+  shooterMotorC.follow(shooterMotorA);
+  shooterMotorD.follow(shooterMotorB);
   }
   
   public void disable(){
