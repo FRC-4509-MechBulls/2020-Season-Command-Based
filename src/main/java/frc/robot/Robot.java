@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
     womfSubsystem.colorMatcher.addColorMatch(kRedTarget);
     womfSubsystem.colorMatcher.addColorMatch(kYellowTarget);
     cannonTilt.init();
+    drivingSubsystem.initDrive();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
