@@ -13,6 +13,7 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,6 +28,7 @@ public class WomfSubsystem extends SubsystemBase {
   }
 
   public static WPI_TalonSRX _motor = new WPI_TalonSRX(2);
+  public static Servo womfServo = new Servo(0); //PWM Port on roboRio
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
@@ -43,20 +45,11 @@ public class WomfSubsystem extends SubsystemBase {
 
   boolean stop = false;
 
-
-
-  public void init() {
-    // _motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    // _motor.configOpenloopRamp(0.2);
-    // _motor.configClosedloopRamp(0.2);
-    // // Talon setup. Setting up + and - output for max and nominal.
-    // // These should never really change
-    // _motor.configNominalOutputForward(0, 0);
-    // _motor.configNominalOutputReverse(0, 0);
-    // _motor.configPeakOutputForward(1, 0);
-    // _motor.configPeakOutputReverse(-1, 0);
-    // _motor.setSensorPhase(true);
-    // _motor.setInverted(true);
+  public void setServo(){
+      womfServo.set(1.0);
+  }
+  public void setServoBack(){
+    womfServo.set(-1.0);
   }
   public void stage1(){
     Constants.setpointWomf = 50;

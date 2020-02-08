@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.womf.ActiveColorCommand;
@@ -8,6 +9,8 @@ import frc.robot.commands.tilt.CannonTiltCommand;
 import frc.robot.commands.climber.ClimberCommand;
 import frc.robot.commands.driving.DirectDriveCommand;
 import frc.robot.commands.womf.InactiveColorCommand;
+import frc.robot.commands.womf.ServoSetBackCommand;
+import frc.robot.commands.womf.ServoSetCommand;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.ShooterOnCommand;
 import frc.robot.commands.climber.TurnOffClimberCommand;
@@ -24,7 +27,6 @@ public class RobotContainer {
     //public XboxController1 controller1;
     XboxController controller2 = new XboxController(Constants.XBOX_CONTROLLER_2_PORT);
     XboxController controller1 = new XboxController(Constants.XBOX_CONTROLLER_1_PORT);
-
    
 
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
@@ -82,11 +84,15 @@ public class RobotContainer {
         double n = controller2.getX(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
     }
+
     private void configureButtonBindings() {
-        final JoystickButton encoderButton = new JoystickButton(controller2, XboxController.Button.kY.value);
         final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);
 
-        final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kX.value);
+        final JoystickButton climberButton = new JoystickButton(controller1, XboxController.Button.kX.value);
+        final JoystickButton servoButton = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
+        servoButton.whenPressed(new ServoSetCommand(womfSubsystem));
+        servoButton.whenReleased(new ServoSetBackCommand(womfSubsystem));
+
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
         colorButton.whenPressed(new ActiveColorCommand(womfSubsystem));
