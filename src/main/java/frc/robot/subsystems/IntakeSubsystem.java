@@ -18,7 +18,7 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
   WPI_TalonSRX intakeMotor = new WPI_TalonSRX(0);
-
+  
   public IntakeSubsystem() {
 
   }
@@ -36,5 +36,6 @@ public class IntakeSubsystem extends SubsystemBase {
     } else {
       Constants.intakeSolenoid.set(false);
     }
+
   }
 }

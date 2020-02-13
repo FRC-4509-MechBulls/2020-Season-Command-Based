@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -56,7 +57,24 @@ public class DrivingSubsystem extends SubsystemBase {
 
 		drive.setDeadband(0);
 	}
-
+	public void autonomousDrive(){
+		Constants.setpointWomf = 50;
+		double sensorPosition = leftBackDriveTalon.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+		double error = Constants.setpointWomf - sensorPosition;
+		double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+		if (Math.abs(error) < Constants.iLimitWomf) {
+		  Constants.errorSumWomf += error * dt;
+		}
+		double errorRate = (error - Constants.lastErrorWomf) / dt;
+		double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+		leftBackDriveTalon.set(outputSpeed);
+		leftFrontDriveTalon.set(outputSpeed);
+		rightBackDriveTalon.set(-outputSpeed);
+		rightFrontDriveTalon.set(-outputSpeed);
+	
+		Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+		Constants.lastErrorWomf = error;
+	}
 	// Directly set the speed of the talons to 0. If a command that sets the speed
 	// is still running, this won't stop it.
 	public void stop() {

@@ -14,6 +14,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
   CannonTiltSubsystem cannonTilt = new CannonTiltSubsystem();
   WomfSubsystem womfSubsystem = new WomfSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
-
+  public Timer timer = new Timer();
   /**
    * A Rev Color Sensor V3 object is constructed with an I2C port as a parameter.
    * The device will be automatically initialized with default parameters.
@@ -106,6 +107,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    timer.reset();
+    timer.start();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -117,31 +120,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-
-    // // Assuming no wheel slip, the difference in encoder distances is
-    // proportional to the heading error
-    // double error = Constants.leftEncoder.getDistance() -
-    // Constants.rightEncoder.getDistance();
-
-    // // Drives forward continuously at half speed, using the encoders to stabilize
-    // the heading
-    // System.out.println(Constants.leftEncoder.getDistance());
-    // System.out.println(Constants.rightEncoder.getDistance());
-
-    // if(Constants.leftEncoder.get() < 1000 && Constants.rightEncoder.get() < 1000
-    // ) {
-    // drive.tankDrive(.5 + 1 * error, .5 - 1 * error);
-    // } else {
-    // drive.tankDrive(0, 0);
-    // }
-    // switch (m_autoSelected) {
-    // case kCustomAuto:
-    // // Put custom auto code here
-    // break;
-    // case kDefaultAuto:
-    // default:
-    // // Put default auto code here
-    // break;
+    
+    switch (m_autoSelected) {
+    case kCustomAuto:
+    // Put custom auto code here
+    break;
+    case kDefaultAuto:
+    default:
+    // Put default auto code here
+    break;
+    }
   }
 
   /**

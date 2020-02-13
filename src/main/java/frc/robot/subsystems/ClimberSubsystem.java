@@ -23,7 +23,8 @@ public class ClimberSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void enable() {
-		Constants.climberSolenoid.set(true);
+    Constants.climberSolenoid.set(true);
+    
 	}
 
 	public void disable() {

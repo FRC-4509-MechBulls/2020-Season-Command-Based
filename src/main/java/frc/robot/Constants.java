@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -17,18 +18,17 @@ import edu.wpi.first.wpilibj.Solenoid;
  */
 public class Constants {
 
-	// public static final int LEFT_FRONT_DRIVE_TALON_PORT  = 8;
-	// public static final int LEFT_BACK_DRIVE_TALON_PORT   = 7;
-	// public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 5;
-	// public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 4;
-	public static final int LEFT_FRONT_DRIVE_TALON_PORT  = 0;
-	public static final int LEFT_BACK_DRIVE_TALON_PORT   = 0;
-	public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 0;
-	public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 0;
+
+
+	public static final int LEFT_FRONT_DRIVE_TALON_PORT  = 7;
+	public static final int LEFT_BACK_DRIVE_TALON_PORT   = 5;
+	public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 8;
+	public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 10;
+
 	public static final int XBOX_CONTROLLER_1_PORT = 0;
     public static final int XBOX_CONTROLLER_2_PORT = 1;
-	public static final int CLIMBER_SOLENOID_PORT = 1;
-	public static final int INTAKE_SOLENOID_PORT =2;
+	public static final int CLIMBER_SOLENOID_PORT = 0;
+	public static final int INTAKE_SOLENOID_PORT =3;
 	public static Solenoid climberSolenoid = new Solenoid(CLIMBER_SOLENOID_PORT);
 	public static Solenoid intakeSolenoid = new Solenoid(INTAKE_SOLENOID_PORT);
 	public static final double kCannonTick2Deg = 360.0 / 512 * 26 / 42 * 18 / 60 * 18 / 84;
@@ -41,7 +41,6 @@ public class Constants {
     public static double errorSumWomf = 0;
     public static double lastTimestampWomf = 0;
     public static double lastErrorWomf = 0;
-
 
 	
 

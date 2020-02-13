@@ -16,10 +16,10 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ShooterSubsystem.
    */
 
-  WPI_TalonSRX shooterMotorA = new WPI_TalonSRX(8);
-  WPI_TalonSRX shooterMotorB = new WPI_TalonSRX(1);
-  WPI_TalonSRX shooterMotorC = new WPI_TalonSRX(5);
-  WPI_TalonSRX shooterMotorD = new WPI_TalonSRX(7);
+  WPI_TalonSRX shooterMotorA = new WPI_TalonSRX(0);
+  WPI_TalonSRX shooterMotorB = new WPI_TalonSRX(0);
+  WPI_TalonSRX shooterMotorC = new WPI_TalonSRX(0);
+  WPI_TalonSRX shooterMotorD = new WPI_TalonSRX(0);
   public ShooterSubsystem() {
 
   }
