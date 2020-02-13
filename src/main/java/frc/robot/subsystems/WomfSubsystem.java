@@ -27,7 +27,7 @@ public class WomfSubsystem extends SubsystemBase {
 
   }
 
-  public static WPI_TalonSRX _motor = new WPI_TalonSRX(2);
+  public static WPI_TalonSRX _motor = new WPI_TalonSRX(0);
   public static Servo womfServo = new Servo(0); //PWM Port on roboRio
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;

@@ -16,7 +16,7 @@ public class CannonTiltSubsystem extends SubsystemBase {
   /**
    * Creates a new CannonTiltSubsystem.
    */
-  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(3);
+  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(0);
   public CannonTiltSubsystem() {
 
   }
