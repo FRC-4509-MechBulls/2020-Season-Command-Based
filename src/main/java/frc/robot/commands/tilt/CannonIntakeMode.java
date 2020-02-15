@@ -5,31 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.intake;
+package frc.robot.commands.tilt;
 
 import java.util.function.DoubleSupplier;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.CannonTiltSubsystem;
 
-public class IntakeCommand extends CommandBase {
-
+public class CannonIntakeMode extends CommandBase {
+  /**
+   * Creates a new CannonTiltCommand.
+   */
   /**
    * Creates a new IntakeCommand.
    */
-  IntakeSubsystem intakeSubsystem;
-  public IntakeCommand(IntakeSubsystem subsystem) {
-    intakeSubsystem = subsystem;
+  CannonTiltSubsystem cannonTiltSubsystem;
+  public CannonIntakeMode(CannonTiltSubsystem subsystem) {
+    cannonTiltSubsystem = subsystem;
 
-    addRequirements(intakeSubsystem);
+    addRequirements(cannonTiltSubsystem);
 
 
 
 
 }
-
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -38,8 +37,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.enable(0.5); 
-
+    cannonTiltSubsystem.intakeMode();
   }
 
   // Called once the command ends or is interrupted.

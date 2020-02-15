@@ -6,13 +6,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.womf.ActiveColorCommand;
-import frc.robot.commands.tilt.CannonTiltCommand;
 import frc.robot.commands.climber.ClimberCommand;
 import frc.robot.commands.driving.DirectDriveCommand;
 import frc.robot.commands.womf.InactiveColorCommand;
 import frc.robot.commands.womf.ServoSetBackCommand;
 import frc.robot.commands.womf.ServoSetCommand;
 import frc.robot.commands.intake.IntakeCommand;
+import frc.robot.commands.intake.IntakeCommandGroup;
+import frc.robot.commands.shooter.ShooterCommandGroup;
 import frc.robot.commands.shooter.ShooterOnCommand;
 import frc.robot.commands.climber.TurnOffClimberCommand;
 import frc.robot.subsystems.CannonTiltSubsystem;
@@ -31,7 +32,6 @@ public class RobotContainer {
    
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-    CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     WomfSubsystem womfSubsystem = new WomfSubsystem();
     ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -50,14 +50,11 @@ public class RobotContainer {
                 shooterSubsystem,
                 () -> getShooter()));
     
-        intakeSubsystem.setDefaultCommand(
-            new IntakeCommand(
-                intakeSubsystem,
-                () -> getIntake()));
-        cannonTiltSubsystem.setDefaultCommand(
-            new CannonTiltCommand(
-                cannonTiltSubsystem,
-                () -> getTilt()));
+        // intakeSubsystem.setDefaultCommand(
+        //     new IntakeCommand(
+        //         intakeSubsystem,
+        //         () -> getIntake()));
+
 
        
     }
@@ -80,23 +77,26 @@ public class RobotContainer {
         double n = controller2.getTriggerAxis(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
     }
-    public double getTilt(){
-        double n = controller2.getX(GenericHID.Hand.kLeft);
-		return Math.abs(n) < 0.1 ? 0 : n;
-    }
 
     private void configureButtonBindings() {
         final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);
 
         final JoystickButton climberButton = new JoystickButton(controller1, XboxController.Button.kX.value);
-        final JoystickButton servoButton = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
-        servoButton.whenPressed(new ServoSetCommand(womfSubsystem));
-        servoButton.whenReleased(new ServoSetBackCommand(womfSubsystem));
+        // final JoystickButton servoButton = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
+        final JoystickButton cannonShoot = new JoystickButton(controller2,  XboxController.Button.kX.value);
+        final JoystickButton cannonIntake = new JoystickButton(controller2,  XboxController.Button.kY.value);
+        final JoystickButton cannonWomf = new JoystickButton(controller2,  XboxController.Button.kB.value);
+        // servoButton.whenPressed(new ServoSetCommand(womfSubsystem));
+        // servoButton.whenReleased(new ServoSetBackCommand(womfSubsystem));
 
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
         colorButton.whenPressed(new ActiveColorCommand(womfSubsystem));
+        //note: make it so colorButton is a commandgroup
         colorButton.whenReleased(new InactiveColorCommand(womfSubsystem));
+
+        cannonShoot.whenPressed(new ShooterCommandGroup());
+        cannonIntake.whenPressed(new IntakeCommandGroup());
 
     }
   

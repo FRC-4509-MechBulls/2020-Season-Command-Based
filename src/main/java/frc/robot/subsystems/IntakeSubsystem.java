@@ -18,6 +18,8 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
   WPI_TalonSRX intakeMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX indexMotor1 = new WPI_TalonSRX(0);
+  WPI_TalonSRX indexMotor2 = new WPI_TalonSRX(0);
   
   public IntakeSubsystem() {
 
@@ -30,6 +32,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void enable(double n) {
     intakeMotor.set(n);
+    indexMotor1.set(0.5);
+    indexMotor2.follow(indexMotor1);
     if (n > 0.0) {
       Constants.intakeSolenoid.set(true);
 
