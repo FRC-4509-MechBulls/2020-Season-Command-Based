@@ -25,6 +25,9 @@ import frc.robot.subsystems.WomfSubsystem;
 
 public class RobotContainer {
 
+    enum StateOptions {INTAKE, SHOOTING, CLIMB, WOMF}; //Neutral?
+    StateOptions currentState = StateOptions.SHOOTING;
+
     //public XboxController1 controller1;
     XboxController controller2 = new XboxController(Constants.XBOX_CONTROLLER_2_PORT);
     XboxController controller1 = new XboxController(Constants.XBOX_CONTROLLER_1_PORT);
@@ -37,27 +40,41 @@ public class RobotContainer {
     ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     public RobotContainer(){
-        configureButtonBindings();
 
-        drivingSubsystem.setDefaultCommand(
-            new DirectDriveCommand(
-                drivingSubsystem,
-                () -> getDrive(),
-                () -> getTurn()));
+        JoystickButton intakeStateButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+        intakeStateButton.whenPressed(() -> {
+            currentState = StateOptions.INTAKE;
+        });
         
-        shooterSubsystem.setDefaultCommand(
-            new ShooterOnCommand(
-                shooterSubsystem,
-                () -> getShooter()));
-    
-        intakeSubsystem.setDefaultCommand(
-            new IntakeCommand(
-                intakeSubsystem,
-                () -> getIntake()));
-        cannonTiltSubsystem.setDefaultCommand(
-            new CannonTiltCommand(
-                cannonTiltSubsystem,
-                () -> getTilt()));
+        switch (currentState) {
+            case INTAKE: 
+                intakeSubsystem.setDefaultCommand(
+                    new IntakeCommand(
+                        intakeSubsystem,
+                        () -> getIntake()));
+
+                drivingSubsystem.setDefaultCommand(
+                    new DirectDriveCommand(
+                        drivingSubsystem,
+                        () -> getDrive(),
+                        () -> getTurn()));
+                break;
+        
+            case SHOOTING:
+                shooterSubsystem.setDefaultCommand(
+                    new ShooterOnCommand(
+                        shooterSubsystem,
+                        () -> getShooter()));
+                break;
+            default:
+
+                break;
+        }
+        
+        // cannonTiltSubsystem.setDefaultCommand(
+        //     new CannonTiltCommand(
+        //         cannonTiltSubsystem,
+        //         () -> getTilt()));
 
        
     }
