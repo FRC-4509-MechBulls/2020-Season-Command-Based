@@ -42,4 +42,10 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
   }
+  public void disable(){
+    intakeMotor.set(0);
+    indexMotor1.set(0);
+    indexMotor2.set(0);
+
+  }
 }

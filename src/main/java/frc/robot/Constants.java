@@ -37,7 +37,8 @@ public class Constants {
     public static final double kDWomf = 0.1;
     public static final double iLimitWomf = 1;
     public static final double kTick2Feet4Womf = 1.0 / 128 * 6 * Math.PI / 12;
-    public static double setpointWomf = 0;
+	public static double setpointWomf = 0;
+	
     public static double errorSumWomf = 0;
     public static double lastTimestampWomf = 0;
     public static double lastErrorWomf = 0;

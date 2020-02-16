@@ -67,6 +67,10 @@ public class CannonTiltSubsystem extends SubsystemBase {
     Constants.lastErrorWomf = error;
   }
 
+  public void stop(){
+    cannonMotor.set(0.0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
