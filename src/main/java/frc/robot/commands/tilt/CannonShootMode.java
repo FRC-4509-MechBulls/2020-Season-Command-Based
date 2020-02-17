@@ -12,18 +12,17 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CannonTiltSubsystem;
 
-public class CannonTiltCommand extends CommandBase {
+public class CannonShootMode extends CommandBase {
   /**
    * Creates a new CannonTiltCommand.
    */
-  private final DoubleSupplier tilt; 
   /**
    * Creates a new IntakeCommand.
    */
   CannonTiltSubsystem cannonTiltSubsystem;
-  public CannonTiltCommand(CannonTiltSubsystem subsystem, DoubleSupplier tilt) {
+  public CannonShootMode(CannonTiltSubsystem subsystem) {
     cannonTiltSubsystem = subsystem;
-    this.tilt = tilt;
+
     addRequirements(cannonTiltSubsystem);
 
 
@@ -38,7 +37,8 @@ public class CannonTiltCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.tilt(tilt.getAsDouble());
+    cannonTiltSubsystem.shootMode();
+    
   }
 
   // Called once the command ends or is interrupted.

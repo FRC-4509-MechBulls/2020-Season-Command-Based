@@ -20,10 +20,10 @@ public class Constants {
 
 
 
-	public static final int LEFT_FRONT_DRIVE_TALON_PORT  = 7;
-	public static final int LEFT_BACK_DRIVE_TALON_PORT   = 5;
-	public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 8;
-	public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 10;
+	public static final int LEFT_FRONT_DRIVE_TALON_PORT  = 3;
+	public static final int LEFT_BACK_DRIVE_TALON_PORT   = 6;
+	public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 11;
+	public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 2;
 
 	public static final int XBOX_CONTROLLER_1_PORT = 0;
     public static final int XBOX_CONTROLLER_2_PORT = 1;
@@ -37,7 +37,8 @@ public class Constants {
     public static final double kDWomf = 0.1;
     public static final double iLimitWomf = 1;
     public static final double kTick2Feet4Womf = 1.0 / 128 * 6 * Math.PI / 12;
-    public static double setpointWomf = 0;
+	public static double setpointWomf = 0;
+	
     public static double errorSumWomf = 0;
     public static double lastTimestampWomf = 0;
     public static double lastErrorWomf = 0;

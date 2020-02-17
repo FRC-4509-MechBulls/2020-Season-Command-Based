@@ -5,26 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.intake;
 
 import java.util.function.DoubleSupplier;
+
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeAndShootSubsystem;
 
-public class ShooterOnCommand extends CommandBase {
-
+public class IntakeOffCommand extends CommandBase {
 
   /**
-   * Creates a new ShooterOnCommand.
+   * Creates a new IntakeCommand.
    */
   IntakeAndShootSubsystem intakeAndShootSubsystem;
-
-  public ShooterOnCommand(IntakeAndShootSubsystem subsystem) {
+  public IntakeOffCommand(IntakeAndShootSubsystem subsystem) {
     intakeAndShootSubsystem = subsystem;
+
     addRequirements(intakeAndShootSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
-  } 
+
+
+
+
+}
+
 
   // Called when the command is initially scheduled.
   @Override
@@ -34,7 +38,8 @@ public class ShooterOnCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeAndShootSubsystem.enable(0.0,-0.5,-1.0); 
+    intakeAndShootSubsystem.disable();
+
   }
 
   // Called once the command ends or is interrupted.

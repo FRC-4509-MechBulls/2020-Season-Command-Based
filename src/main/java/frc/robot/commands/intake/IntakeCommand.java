@@ -11,19 +11,18 @@ import java.util.function.DoubleSupplier;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeAndShootSubsystem;
 
 public class IntakeCommand extends CommandBase {
 
-private final DoubleSupplier spin; 
   /**
    * Creates a new IntakeCommand.
    */
-  IntakeSubsystem intakeSubsystem;
-  public IntakeCommand(IntakeSubsystem subsystem, DoubleSupplier spin) {
-    intakeSubsystem = subsystem;
-    this.spin = spin;
-    addRequirements(intakeSubsystem);
+  IntakeAndShootSubsystem intakeAndShootSubsystem;
+  public IntakeCommand(IntakeAndShootSubsystem subsystem) {
+    intakeAndShootSubsystem = subsystem;
+
+    addRequirements(intakeAndShootSubsystem);
 
 
 
@@ -39,7 +38,7 @@ private final DoubleSupplier spin;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.enable(spin.getAsDouble()); 
+    intakeAndShootSubsystem.enable(1.0,0.5,1.0); 
 
   }
 

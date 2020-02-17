@@ -7,8 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,23 +18,67 @@ public class CannonTiltSubsystem extends SubsystemBase {
   /**
    * Creates a new CannonTiltSubsystem.
    */
-  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(15);
   public CannonTiltSubsystem() {
 
   }
   public void init(){
-    cannonMotor.configReverseSoftLimitThreshold((int) (0 / Constants.kCannonTick2Deg), 10);
-    cannonMotor.configForwardSoftLimitThreshold((int) (175 / Constants.kCannonTick2Deg), 10);
-
-    cannonMotor.configReverseSoftLimitEnable(true, 10);
-    cannonMotor.configForwardSoftLimitEnable(true, 10);
+    cannonMotor.setNeutralMode(NeutralMode.Brake);
+  }
+  public void shootMode(){
+    
+    Constants.setpointWomf = 50;
+    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    double error = Constants.setpointWomf - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+    if (Math.abs(error) < Constants.iLimitWomf) {
+      Constants.errorSumWomf += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorWomf) / dt;
+    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+    cannonMotor.set(outputSpeed);
+    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+    Constants.lastErrorWomf = error;
+  }
+  public void intakeMode(){
+    
+    Constants.setpointWomf = 80;
+    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    double error = Constants.setpointWomf - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+    if (Math.abs(error) < Constants.iLimitWomf) {
+      Constants.errorSumWomf += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorWomf) / dt;
+    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+    cannonMotor.set(outputSpeed);
+    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+    Constants.lastErrorWomf = error;
+  }
+  public void womfMode(){
+    
+    Constants.setpointWomf = 70;
+    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    double error = Constants.setpointWomf - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+    if (Math.abs(error) < Constants.iLimitWomf) {
+      Constants.errorSumWomf += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorWomf) / dt;
+    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+    cannonMotor.set(outputSpeed);
+    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+    Constants.lastErrorWomf = error;
   }
 
-  public void tilt(double n){
-    cannonMotor.set(n);
+  public void stop(){
+    cannonMotor.set(0.0);
   }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void test(){
+    // cannonMotor.set(-.20);
   }
+  // @Override
+  // public void periodic() {
+  //   // This method will be called once per scheduler run
+  // }
 }

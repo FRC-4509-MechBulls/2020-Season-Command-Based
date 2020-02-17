@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
   WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
   static RobotContainer oi = new RobotContainer();
-  CannonTiltSubsystem cannonTilt = new CannonTiltSubsystem();
+  CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
   WomfSubsystem womfSubsystem = new WomfSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   public Timer timer = new Timer();
@@ -65,8 +65,8 @@ public class Robot extends TimedRobot {
     womfSubsystem.colorMatcher.addColorMatch(kGreenTarget);
     womfSubsystem.colorMatcher.addColorMatch(kRedTarget);
     womfSubsystem.colorMatcher.addColorMatch(kYellowTarget);
-    cannonTilt.init();
     drivingSubsystem.initDrive();
+    cannonTiltSubsystem.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -120,7 +120,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    
     switch (m_autoSelected) {
     case kCustomAuto:
     // Put custom auto code here

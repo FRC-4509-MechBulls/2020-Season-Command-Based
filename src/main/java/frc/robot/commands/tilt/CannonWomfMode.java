@@ -5,27 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.tilt;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeAndShootSubsystem;
+import frc.robot.subsystems.CannonTiltSubsystem;
 
-public class ShooterOnCommand extends CommandBase {
-
-
+public class CannonWomfMode extends CommandBase {
   /**
-   * Creates a new ShooterOnCommand.
+   * Creates a new CannonTiltCommand.
    */
-  IntakeAndShootSubsystem intakeAndShootSubsystem;
+  /**
+   * Creates a new IntakeCommand.
+   */
+  CannonTiltSubsystem cannonTiltSubsystem;
+  public CannonWomfMode(CannonTiltSubsystem subsystem) {
+    cannonTiltSubsystem = subsystem;
 
-  public ShooterOnCommand(IntakeAndShootSubsystem subsystem) {
-    intakeAndShootSubsystem = subsystem;
-    addRequirements(intakeAndShootSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
-  } 
+    addRequirements(cannonTiltSubsystem);
 
+
+
+
+}
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -34,7 +37,8 @@ public class ShooterOnCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeAndShootSubsystem.enable(0.0,-0.5,-1.0); 
+    cannonTiltSubsystem.womfMode();
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -12,14 +12,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class IntakeAndShootSubsystem extends SubsystemBase {
   /**
-   * Creates a new IntakeSubsystem.
+   * Creates a new IntakeAndShootSubsystem.
    */
 
-  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(16);
+  WPI_TalonSRX indexMotor1 = new WPI_TalonSRX(1);
+  WPI_TalonSRX indexMotor2 = new WPI_TalonSRX(13);
+  WPI_TalonSRX flywheel1 = new WPI_TalonSRX(4);
+  WPI_TalonSRX flywheel2 = new WPI_TalonSRX(17);
+
+
   
-  public IntakeSubsystem() {
+  public IntakeAndShootSubsystem() {
 
   }
 
@@ -28,14 +34,28 @@ public class IntakeSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void enable(double n) {
-    intakeMotor.set(n);
-    if (n > 0.0) {
+  public void enable(double intake, double index, double flywheel) {
+    intakeMotor.set(intake);
+    indexMotor1.set(index);
+    indexMotor2.set(-index);
+    flywheel1.set(flywheel);
+    flywheel2.set(-flywheel);
+
+    if (intake > 0.0) {
       Constants.intakeSolenoid.set(true);
 
     } else {
       Constants.intakeSolenoid.set(false);
     }
+
+  }
+
+  public void disable(){
+    intakeMotor.set(0);
+    indexMotor1.set(0);
+    indexMotor2.set(0);
+    flywheel1.set(0.0);
+    flywheel2.set(0.0);
 
   }
 }
