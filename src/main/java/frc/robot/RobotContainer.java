@@ -12,7 +12,7 @@ import frc.robot.commands.womf.InactiveColorCommand;
 import frc.robot.commands.womf.ServoSetBackCommand;
 import frc.robot.commands.womf.ServoSetCommand;
 import frc.robot.commands.intake.IntakeCommand;
-
+import frc.robot.commands.intake.IntakeOffCommand;
 import frc.robot.commands.shooter.ShooterOnCommand;
 import frc.robot.commands.tilt.CannonIntakeMode;
 import frc.robot.commands.tilt.CannonShootMode;
@@ -22,8 +22,7 @@ import frc.robot.commands.climber.TurnOffClimberCommand;
 import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeAndShootSubsystem;
 import frc.robot.subsystems.WomfSubsystem;
 
 
@@ -35,9 +34,8 @@ public class RobotContainer {
    
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    IntakeAndShootSubsystem intakeAndShootSubsystem = new IntakeAndShootSubsystem();
     WomfSubsystem womfSubsystem = new WomfSubsystem();
-    ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
     public RobotContainer(){
         configureButtonBindings();
@@ -48,16 +46,6 @@ public class RobotContainer {
                 () -> getDrive(),
                 () -> getTurn()));
         
-        shooterSubsystem.setDefaultCommand(
-            new ShooterOnCommand(
-                shooterSubsystem,
-                () -> getShooter()));
-    
-        // intakeSubsystem.setDefaultCommand(
-        //     new IntakeCommand(
-        //         intakeSubsystem,
-        //         () -> getIntake()));
-
 
        
     }
@@ -92,10 +80,10 @@ public class RobotContainer {
 
         colorButton.whenReleased(new InactiveColorCommand(womfSubsystem));
 
-        cannonShoot.whenPressed(new CannonShootMode(cannonTiltSubsystem));
-        cannonShoot.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
-        cannonIntake.whenPressed(new CannonIntakeMode(cannonTiltSubsystem).alongWith(new IntakeCommand(intakeSubsystem)));
-        cannonIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
+        cannonShoot.whenPressed(new ShooterOnCommand(intakeAndShootSubsystem));
+        cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
+        cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
+        cannonIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new IntakeOffCommand(intakeAndShootSubsystem)));
         cannonWomf.whenPressed(new CannonWomfMode(cannonTiltSubsystem).alongWith(new ServoSetCommand(womfSubsystem)));
         cannonWomf.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new ServoSetBackCommand(womfSubsystem)));
 

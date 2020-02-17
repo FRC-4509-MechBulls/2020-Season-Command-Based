@@ -37,7 +37,8 @@ public class CannonIntakeMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.intakeMode();
+     cannonTiltSubsystem.intakeMode();
+    // cannonTiltSubsystem.test();
   }
 
   // Called once the command ends or is interrupted.

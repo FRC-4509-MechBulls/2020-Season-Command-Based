@@ -11,18 +11,18 @@ import java.util.function.DoubleSupplier;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeAndShootSubsystem;
 
 public class IntakeOffCommand extends CommandBase {
 
   /**
    * Creates a new IntakeCommand.
    */
-  IntakeSubsystem intakeSubsystem;
-  public IntakeOffCommand(IntakeSubsystem subsystem) {
-    intakeSubsystem = subsystem;
+  IntakeAndShootSubsystem intakeAndShootSubsystem;
+  public IntakeOffCommand(IntakeAndShootSubsystem subsystem) {
+    intakeAndShootSubsystem = subsystem;
 
-    addRequirements(intakeSubsystem);
+    addRequirements(intakeAndShootSubsystem);
 
 
 
@@ -38,7 +38,7 @@ public class IntakeOffCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.disable();
+    intakeAndShootSubsystem.disable();
 
   }
 

@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -17,9 +18,12 @@ public class CannonTiltSubsystem extends SubsystemBase {
   /**
    * Creates a new CannonTiltSubsystem.
    */
-  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX cannonMotor = new WPI_TalonSRX(15);
   public CannonTiltSubsystem() {
 
+  }
+  public void init(){
+    cannonMotor.setNeutralMode(NeutralMode.Brake);
   }
   public void shootMode(){
     
@@ -70,9 +74,11 @@ public class CannonTiltSubsystem extends SubsystemBase {
   public void stop(){
     cannonMotor.set(0.0);
   }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void test(){
+    // cannonMotor.set(-.20);
   }
+  // @Override
+  // public void periodic() {
+  //   // This method will be called once per scheduler run
+  // }
 }

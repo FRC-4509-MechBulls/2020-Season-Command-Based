@@ -32,13 +32,13 @@ public class DrivingSubsystem extends SubsystemBase {
 
 	public void drive(double ySpeed, double rotation) {
 
-		if (Math.abs(ySpeed) > 1)
-			ySpeed = Math.abs(ySpeed) / ySpeed; // if the value given was too high, set it to the max
-		ySpeed *= baseDriveSpeed; // scale down the speed
+		// if (Math.abs(ySpeed) > 1)
+		// 	ySpeed = Math.abs(ySpeed) / ySpeed; // if the value given was too high, set it to the max
+		// ySpeed *= baseDriveSpeed; // scale down the speed
 
-		if (Math.abs(rotation) > 1)
-			rotation = Math.abs(rotation) / rotation; // if the value given was too high, set it to the max
-		rotation *= baseDriveSpeed; // scale down the speed
+		// if (Math.abs(rotation) > 1)
+		// 	rotation = Math.abs(rotation) / rotation; // if the value given was too high, set it to the max
+		// rotation *= baseDriveSpeed; // scale down the speed
 
 		drive.arcadeDrive(ySpeed, rotation); // function provided by the drivetrain. controls y and turn speed at the
 												// same time.
@@ -81,4 +81,5 @@ public class DrivingSubsystem extends SubsystemBase {
 		leftFrontDriveTalon.set(0);
 		rightFrontDriveTalon.set(0);
 	}
+
 }
