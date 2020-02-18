@@ -10,7 +10,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -65,7 +64,7 @@ public class Robot extends TimedRobot {
     womfSubsystem.colorMatcher.addColorMatch(kGreenTarget);
     womfSubsystem.colorMatcher.addColorMatch(kRedTarget);
     womfSubsystem.colorMatcher.addColorMatch(kYellowTarget);
-    drivingSubsystem.initDrive();
+    DrivingSubsystem.initDrive();
     cannonTiltSubsystem.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);

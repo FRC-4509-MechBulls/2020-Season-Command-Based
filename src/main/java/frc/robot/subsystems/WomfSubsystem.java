@@ -33,7 +33,7 @@ public class WomfSubsystem extends SubsystemBase {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  public final static ColorMatch colorMatcher = new ColorMatch();
+  public final ColorMatch colorMatcher = new ColorMatch();
   Color detectedColor = colorSensor.getColor();
   double IR = colorSensor.getIR();
 
@@ -41,7 +41,7 @@ public class WomfSubsystem extends SubsystemBase {
    * Note: Any example colors should be calibrated as the user needs, these are
    * here as a basic example.
    */
-  public static Color targetColor = ColorMatch.makeColor(0.0, 0.0, 0.0);
+  public Color targetColor = ColorMatch.makeColor(0.0, 0.0, 0.0);
 
   boolean stop = false;
 

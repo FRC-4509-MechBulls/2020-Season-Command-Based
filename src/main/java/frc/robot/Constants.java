@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -24,6 +23,7 @@ public class Constants {
 	public static final int LEFT_BACK_DRIVE_TALON_PORT   = 6;
 	public static final int RIGHT_FRONT_DRIVE_TALON_PORT = 11;
 	public static final int RIGHT_BACK_DRIVE_TALON_PORT  = 2;
+	public static final double baseDriveSpeed = 0.90;
 
 	public static final int XBOX_CONTROLLER_1_PORT = 0;
     public static final int XBOX_CONTROLLER_2_PORT = 1;
