@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -24,6 +25,17 @@ public class CannonTiltSubsystem extends SubsystemBase {
   }
   public void init(){
     cannonMotor.setNeutralMode(NeutralMode.Brake);
+    cannonMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    cannonMotor.configOpenloopRamp(0.2);
+    cannonMotor.configClosedloopRamp(0.2);
+    cannonMotor.configNominalOutputForward(0, 0);
+    cannonMotor.configNominalOutputReverse(0, 0);
+    cannonMotor.configPeakOutputForward(1, 0);
+    cannonMotor.configPeakOutputReverse(-1, 0);
+    cannonMotor.setSensorPhase(true);
+    cannonMotor.setInverted(true);
+
+    
   }
   public void shootMode(){
     
@@ -75,7 +87,7 @@ public class CannonTiltSubsystem extends SubsystemBase {
     cannonMotor.set(0.0);
   }
   public void test(){
-    // cannonMotor.set(-.20);
+    cannonMotor.set(-.35);
   }
   // @Override
   // public void periodic() {

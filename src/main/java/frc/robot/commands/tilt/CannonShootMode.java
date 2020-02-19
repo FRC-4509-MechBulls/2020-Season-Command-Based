@@ -37,8 +37,8 @@ public class CannonShootMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.shootMode();
-    
+    // cannonTiltSubsystem.shootMode();
+    cannonTiltSubsystem.test();
   }
 
   // Called once the command ends or is interrupted.
