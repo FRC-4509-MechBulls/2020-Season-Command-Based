@@ -14,6 +14,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +34,8 @@ public class Robot extends TimedRobot {
   public static final DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
+  private final Timer m_timer = new Timer();
+
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
   WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
@@ -109,7 +112,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-
+  //Drive for 2 seconds
+  if (m_timer.get() < 2.0) {
+    drivingSubsystem.drive.arcadeDrive(0.5, 0.0); }
+    else
+    {
+      drivingSubsystem.drive.stopMotor();
+    }
+  //drive forwards half speed } 
     // // Assuming no wheel slip, the difference in encoder distances is
     // proportional to the heading error
     // double error = Constants.leftEncoder.getDistance() -
