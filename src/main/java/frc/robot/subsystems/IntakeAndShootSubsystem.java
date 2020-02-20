@@ -17,11 +17,11 @@ public class IntakeAndShootSubsystem extends SubsystemBase {
    * Creates a new IntakeAndShootSubsystem.
    */
 
-  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(16);
-  WPI_TalonSRX indexMotor1 = new WPI_TalonSRX(1);
-  WPI_TalonSRX indexMotor2 = new WPI_TalonSRX(13);
-  WPI_TalonSRX flywheel1 = new WPI_TalonSRX(4);
-  WPI_TalonSRX flywheel2 = new WPI_TalonSRX(17);
+  public static WPI_TalonSRX intakeMotor = new WPI_TalonSRX(16);
+  public static WPI_TalonSRX indexMotor1 = new WPI_TalonSRX(1);
+  public static WPI_TalonSRX indexMotor2 = new WPI_TalonSRX(13);
+  public static WPI_TalonSRX flywheel1 = new WPI_TalonSRX(4);
+  public static WPI_TalonSRX flywheel2 = new WPI_TalonSRX(17);
 
 
   

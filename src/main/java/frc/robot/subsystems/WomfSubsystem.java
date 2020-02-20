@@ -27,9 +27,8 @@ public class WomfSubsystem extends SubsystemBase {
 
   }
 
-  public static WPI_TalonSRX _motor = new WPI_TalonSRX(0);
   public static Servo womfServo = new Servo(0); //PWM Port on roboRio
-
+  IntakeAndShootSubsystem intakeAndShootSubsystem = new IntakeAndShootSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
@@ -53,7 +52,7 @@ public class WomfSubsystem extends SubsystemBase {
   }
   public void stage1(){
     Constants.setpointWomf = 50;
-    double sensorPosition = _motor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    double sensorPosition = intakeAndShootSubsystem.flywheel1.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
     double error = Constants.setpointWomf - sensorPosition;
     double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
     if (Math.abs(error) < Constants.iLimitWomf) {
@@ -61,7 +60,7 @@ public class WomfSubsystem extends SubsystemBase {
     }
     double errorRate = (error - Constants.lastErrorWomf) / dt;
     double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
-    _motor.set(outputSpeed);
+    intakeAndShootSubsystem.flywheel1.set(outputSpeed);
     Constants.lastTimestampWomf = Timer.getFPGATimestamp();
     Constants.lastErrorWomf = error;
   }
@@ -80,13 +79,13 @@ public class WomfSubsystem extends SubsystemBase {
     // for targetColor, in gamedata in setup type B, Y, R, G for the colors it needs
     // to detect
     if (match.color == targetColor) {
-      _motor.set(0);
+      intakeAndShootSubsystem.flywheel1.set(0);
       stop = true;
 
     } else if (match.color != targetColor) {
-      _motor.set(0.75);
+      intakeAndShootSubsystem.flywheel1.set(0.75);
       if (stop) {
-        _motor.set(0.0);
+        intakeAndShootSubsystem.flywheel1.set(0.0);
       }
 
     }
@@ -94,7 +93,7 @@ public class WomfSubsystem extends SubsystemBase {
   }
 
   public void disable() {
-    _motor.set(0);
+    intakeAndShootSubsystem.flywheel1.set(0);
     stop = false;
   }
 

@@ -52,6 +52,14 @@ public class DrivingSubsystem extends SubsystemBase {
 
 		drive.setDeadband(0);
 	}
+	public void test(){
+		// leftFrontDriveTalon.set(-0.5);
+		// // leftBackDriveTalon.set(-0.5);
+		// rightFrontDriveTalon.set(0.5);
+		// rightBackDriveTalon.set(0.5);
+		// drive.arcadeDrive(0.5, 0.0);
+
+	}
 	// public void autonomousDrive(){
 	// 	Constants.setpointWomf = 50;
 	// 	double sensorPosition = leftBackDriveTalon.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;

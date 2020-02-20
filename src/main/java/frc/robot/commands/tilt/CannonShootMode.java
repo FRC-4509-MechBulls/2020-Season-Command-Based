@@ -36,7 +36,7 @@ public class CannonShootMode extends CommandBase {
   @Override
   public void execute() {
     cannonTiltSubsystem.shootMode();
-    
+    // cannonTiltSubsystem.test();
   }
 
   // Called once the command ends or is interrupted.

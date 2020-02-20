@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.WomfSubsystem;
+import edu.wpi.first.wpilibj.Timer;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +35,8 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   public static final DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
   private static final String kCustomAuto = "My Auto";
+  private final Timer m_timer = new Timer();
+
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
@@ -41,7 +45,6 @@ public class Robot extends TimedRobot {
   CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
   WomfSubsystem womfSubsystem = new WomfSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  public Timer timer = new Timer();
   /**
    * A Rev Color Sensor V3 object is constructed with an I2C port as a parameter.
    * The device will be automatically initialized with default parameters.
@@ -83,7 +86,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-
+    SmartDashboard.putNumber("encoder value", cannonTiltSubsystem.cannonMotor.getSelectedSensorPosition(0) * Constants.kCannonTick2Deg);
   }
 
   @Override
@@ -106,8 +109,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    timer.reset();
-    timer.start();
+    m_timer.reset();
+    m_timer.start();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -119,7 +122,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
+    // if (m_timer.get() < 5.0) {
+    //   drivingSubsystem.drive.arcadeDrive(-0.5, 0.0); }
+    //   else
+    //   {
+    //     drivingSubsystem.drive.arcadeDrive(0.0,0.0);
+    //     return;
+    //   }   
+      
+  switch (m_autoSelected) {
     case kCustomAuto:
     // Put custom auto code here
     break;
