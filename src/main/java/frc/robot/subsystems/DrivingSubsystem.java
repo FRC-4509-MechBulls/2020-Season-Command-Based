@@ -8,17 +8,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DrivingSubsystem extends SubsystemBase {
-	/**
-	 * Creates a new DriveSubsystem.
-	 */
-	public double baseDriveSpeed = 0.90;
+
 	public static DifferentialDrive drive;
 	public static WPI_TalonSRX leftFrontDriveTalon;
 	public static WPI_TalonSRX leftBackDriveTalon;
