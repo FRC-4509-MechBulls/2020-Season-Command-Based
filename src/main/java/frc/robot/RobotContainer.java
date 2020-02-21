@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.womf.ActiveColorCommand;
 import frc.robot.commands.climber.ClimberCommand;
+import frc.robot.commands.driving.AutoCommand;
 import frc.robot.commands.driving.DirectDriveCommand;
 import frc.robot.commands.womf.InactiveColorCommand;
 import frc.robot.commands.womf.ServoSetBackCommand;
@@ -31,8 +32,9 @@ public class RobotContainer {
     //public XboxController1 controller1;
     XboxController controller2 = new XboxController(Constants.XBOX_CONTROLLER_2_PORT);
     XboxController controller1 = new XboxController(Constants.XBOX_CONTROLLER_1_PORT);
-   
     DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
+    AutoCommand autoDefault = new AutoCommand(drivingSubsystem);
+
     ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     IntakeAndShootSubsystem intakeAndShootSubsystem = new IntakeAndShootSubsystem();
     WomfSubsystem womfSubsystem = new WomfSubsystem();
@@ -93,8 +95,8 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    // public Command getAutonomousCommand() {
-    //   // An ExampleCommand will run in autonomous
-    //   return autoDefault;
-    // }
+    public Command getAutonomousCommand() {
+      // An ExampleCommand will run in autonomous
+      return autoDefault;
+    }
  }

@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.commands.driving.DirectDriveCommand;
 
 public class DrivingSubsystem extends SubsystemBase {
 	/**
@@ -24,6 +26,10 @@ public class DrivingSubsystem extends SubsystemBase {
 	public static WPI_TalonSRX leftBackDriveTalon;
 	public static WPI_TalonSRX rightFrontDriveTalon;
 	public static WPI_TalonSRX rightBackDriveTalon;
+	Timer timer = new Timer();
+	RobotContainer oi = new RobotContainer();
+
+	DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
 
 	@Override
 	public void periodic() {
@@ -65,24 +71,14 @@ public class DrivingSubsystem extends SubsystemBase {
 		// drive.arcadeDrive(0.5, 0.0);
 
 	}
-	// public void autonomousDrive(){
-	// 	Constants.setpointWomf = 50;
-	// 	double sensorPosition = leftBackDriveTalon.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
-	// 	double error = Constants.setpointWomf - sensorPosition;
-	// 	double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
-	// 	if (Math.abs(error) < Constants.iLimitWomf) {
-	// 	  Constants.errorSumWomf += error * dt;
-	// 	}
-	// 	double errorRate = (error - Constants.lastErrorWomf) / dt;
-	// 	double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
-	// 	leftBackDriveTalon.set(outputSpeed);
-	// 	leftFrontDriveTalon.set(outputSpeed);
-	// 	rightBackDriveTalon.set(-outputSpeed);
-	// 	rightFrontDriveTalon.set(-outputSpeed);
-	
-	// 	Constants.lastTimestampWomf = Timer.getFPGATimestamp();
-	// 	Constants.lastErrorWomf = error;
-	// }
+	public void auto(){
+		if(timer.get() < 2){
+			drive.arcadeDrive(-0.5, 0.0);
+		}
+
+	}
+
+
 	// Directly set the speed of the talons to 0. If a command that sets the speed
 	// is still running, this won't stop it.
 	public void stop() {
