@@ -47,8 +47,8 @@ public class Constants {
     public static double lastTimestampShoot = 0;
     public static double lastErrorShoot = 0;
 	public static final double kPShoot = 0.04;
-    public static final double kIShoot = 0.4;
-	public static final double kDShoot = 0.1;
+    public static final double kIShoot = 0.04;
+	public static final double kDShoot = 0.5;
 	public static final double iLimitShoot = 1;
 
 	
