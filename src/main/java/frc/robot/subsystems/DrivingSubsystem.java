@@ -35,8 +35,8 @@ public class DrivingSubsystem extends SubsystemBase {
 		// 	rotation = Math.abs(rotation) / rotation; // if the value given was too high, set it to the max
 		// rotation *= baseDriveSpeed; // scale down the speed
 
-		drive.arcadeDrive(ySpeed, rotation); // function provided by the drivetrain. controls y and turn speed at the
-												// same time.
+		drive.tankDrive(ySpeed, rotation); // function provided by the drivetrain. controls y and turn speed at the
+												// // same time.
 	}
 
 	public static void initDrive() {

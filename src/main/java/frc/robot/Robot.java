@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -17,7 +18,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.driving.AutoCommand;
 import frc.robot.subsystems.CannonTiltSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.WomfSubsystem;
@@ -36,11 +39,10 @@ public class Robot extends TimedRobot {
   public static final DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
   private static final String kCustomAuto = "My Auto";
   private final Timer m_timer = new Timer();
-
+  Command auto;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  WPI_TalonSRX leftMotors = new WPI_TalonSRX(2);
-  WPI_TalonSRX rightMotors = new WPI_TalonSRX(3);
+
   static RobotContainer oi = new RobotContainer();
   CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
   WomfSubsystem womfSubsystem = new WomfSubsystem();
@@ -61,13 +63,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    auto = new AutoCommand(drivingSubsystem);
+    auto.initialize();
     Robot.oi = new RobotContainer();
     womfSubsystem.colorMatcher.setConfidenceThreshold(1.0);
     womfSubsystem.colorMatcher.addColorMatch(kBlueTarget);
     womfSubsystem.colorMatcher.addColorMatch(kGreenTarget);
     womfSubsystem.colorMatcher.addColorMatch(kRedTarget);
     womfSubsystem.colorMatcher.addColorMatch(kYellowTarget);
-    DrivingSubsystem.initDrive();
+    drivingSubsystem.initDrive();
     cannonTiltSubsystem.init();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -109,8 +113,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_timer.reset();
-    m_timer.start();
+    CommandScheduler.getInstance().run();
+
+    // auto.schedule();
+    if (auto != null) auto.schedule();
+    if(auto.isFinished() == true){
+      auto.cancel();
+    }
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -122,15 +131,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    // if (m_timer.get() < 5.0) {
-    //   drivingSubsystem.drive.arcadeDrive(-0.5, 0.0); }
-    //   else
-    //   {
-    //     drivingSubsystem.drive.arcadeDrive(0.0,0.0);
-    //     return;
-    //   }   
-      
-  switch (m_autoSelected) {
+    CommandScheduler.getInstance().run();
+    if(auto.isFinished() == true){
+      auto.cancel();
+    }
+    
+        switch (m_autoSelected) {
     case kCustomAuto:
     // Put custom auto code here
     break;
@@ -144,6 +150,12 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
+  @Override
+  public void teleopInit() {
+    // TODO Auto-generated method stub
+    super.teleopInit();
+    auto.cancel();
+  }
   @Override
   public void teleopPeriodic() {
     String gameData;

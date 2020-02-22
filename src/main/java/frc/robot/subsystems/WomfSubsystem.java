@@ -26,7 +26,7 @@ public class WomfSubsystem extends SubsystemBase {
   public WomfSubsystem() {
 
   }
-
+  
   public static Servo womfServo = new Servo(0); //PWM Port on roboRio
   IntakeAndShootSubsystem intakeAndShootSubsystem = new IntakeAndShootSubsystem();
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
