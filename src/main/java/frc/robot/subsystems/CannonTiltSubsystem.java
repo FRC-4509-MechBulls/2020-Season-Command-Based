@@ -65,24 +65,10 @@ public class CannonTiltSubsystem extends SubsystemBase {
     Constants.lastErrorShoot = error;
     System.out.println(sensorPosition);
   }
-  public void intakeMode(){
-    
-    Constants.setpointWomf = 80;
-    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
-    double error = Constants.setpointWomf - sensorPosition;
-    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
-    if (Math.abs(error) < Constants.iLimitWomf) {
-      Constants.errorSumWomf += error * dt;
-    }
-    double errorRate = (error - Constants.lastErrorWomf) / dt;
-    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
-    cannonMotor.set(outputSpeed);
-    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
-    Constants.lastErrorWomf = error;
-  }
+
   public void womfMode(){
     
-    Constants.setpointWomf = 70;
+    Constants.setpointWomf = 1;
     double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
     double error = Constants.setpointWomf - sensorPosition;
     double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;

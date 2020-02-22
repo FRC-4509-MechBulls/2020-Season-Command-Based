@@ -59,14 +59,14 @@ public class RobotContainer {
 
 
     private void configureButtonBindings() {
-        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kA.value);
+        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
 
         final JoystickButton climberButton = new JoystickButton(controller1, XboxController.Button.kX.value);
         final JoystickButton cannonShoot = new JoystickButton(controller2,  XboxController.Button.kX.value);
         final JoystickButton cannonIntake = new JoystickButton(controller2,  XboxController.Button.kY.value);
         // final JoystickButton cannonWomf = new JoystickButton(controller2,  XboxController.Button.kB.value);
 
-        final JoystickButton cannonTilt= new JoystickButton(controller2,  XboxController.Button.kB.value);
+        final JoystickButton cannonTilt= new JoystickButton(controller2,  XboxController.Button.kBumperRight.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
         colorButton.whenPressed(new ActiveColorCommand(womfSubsystem));
@@ -78,8 +78,6 @@ public class RobotContainer {
         cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
         cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
         cannonIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new IntakeOffCommand(intakeAndShootSubsystem)));
-        // cannonWomf.whenPressed(new CannonWomfMode(cannonTiltSubsystem).alongWith(new ServoSetCommand(womfSubsystem)));
-        // cannonWomf.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new ServoSetBackCommand(womfSubsystem)));
 
 
     }
