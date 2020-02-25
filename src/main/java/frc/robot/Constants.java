@@ -33,8 +33,8 @@ public class Constants {
 	public static Solenoid intakeSolenoid = new Solenoid(INTAKE_SOLENOID_PORT);
 	public static final double kCannonTick2Deg = 360.0 / 512 * 26 / 42 * 18 / 60 * 18 / 84;
 	public static final double kPWomf = 0.04;
-    public static final double kIWomf = 0.4;
-    public static final double kDWomf = 0.1;
+    public static final double kIWomf = 0.04;
+    public static final double kDWomf = 0.5;
     public static final double iLimitWomf = 1;
     public static final double kTick2Feet4Womf = 1.0 / 128 * 6 * Math.PI / 12;
 	public static double setpointWomf = 0;
@@ -48,7 +48,7 @@ public class Constants {
     public static double lastErrorShoot = 0;
 	public static final double kPShoot = 0.04;
     public static final double kIShoot = 0.04;
-	public static final double kDShoot = 0.5;
+	public static final double kDShoot = 0.04;
 	public static final double iLimitShoot = 1;
 
 	
