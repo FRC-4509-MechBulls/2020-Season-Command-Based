@@ -83,7 +83,7 @@ public class WomfSubsystem extends SubsystemBase {
       stop = true;
 
     } else if (match.color != targetColor) {
-      intakeAndShootSubsystem.flywheel1.set(0.35);
+      intakeAndShootSubsystem.flywheel1.set(0.2);
       if (stop) {
         intakeAndShootSubsystem.flywheel1.set(0.0);
       }

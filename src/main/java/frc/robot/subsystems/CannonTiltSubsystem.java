@@ -65,23 +65,73 @@ public class CannonTiltSubsystem extends SubsystemBase {
     Constants.lastErrorShoot = error;
     System.out.println(sensorPosition);
   }
+  public void climbMode(){
+    
+    // Constants.setpointWomf = 6;
+    // Constants.setpointShoot = 25;
+    Constants.setpointShoot = -5;
+
+    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kCannonTick2Deg;
+    double error = Constants.setpointShoot - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampShoot;
+    if (Math.abs(error) < Constants.iLimitShoot) {
+      Constants.errorSumShoot += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorShoot) / dt;
+    double outputSpeed = Constants.kPShoot * error + Constants.kIShoot * Constants.errorSumShoot + Constants.kDShoot * errorRate;
+    cannonMotor.set(-outputSpeed);
+    Constants.lastTimestampShoot = Timer.getFPGATimestamp();
+    Constants.lastErrorShoot = error;
+    System.out.println(sensorPosition);
+  }
 
   public void womfMode(){
     
-    Constants.setpointWomf = 1;
-    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
-    double error = Constants.setpointWomf - sensorPosition;
-    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
-    if (Math.abs(error) < Constants.iLimitWomf) {
-      Constants.errorSumWomf += error * dt;
-    }
-    double errorRate = (error - Constants.lastErrorWomf) / dt;
-    double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
-    cannonMotor.set(outputSpeed);
-    Constants.lastTimestampWomf = Timer.getFPGATimestamp();
-    Constants.lastErrorWomf = error;
-  }
+    // Constants.setpointWomf = -15;
+    // double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kTick2Feet4Womf;
+    // double error = Constants.setpointWomf - sensorPosition;
+    // double dt = Timer.getFPGATimestamp() - Constants.lastTimestampWomf;
+    // if (Math.abs(error) < Constants.iLimitWomf) {
+    //   Constants.errorSumWomf += error * dt;
+    // }
+    // double errorRate = (error - Constants.lastErrorWomf) / dt;
+    // double outputSpeed = Constants.kPWomf * error + Constants.kIWomf * Constants.errorSumWomf + Constants.kDWomf * errorRate;
+    // cannonMotor.set(-outputSpeed);
+    // Constants.lastTimestampWomf = Timer.getFPGATimestamp();
+    // Constants.lastErrorWomf = error;
+       Constants.setpointShoot = -15;
 
+      double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kCannonTick2Deg;
+      double error = Constants.setpointShoot - sensorPosition;
+      double dt = Timer.getFPGATimestamp() - Constants.lastTimestampShoot;
+      if (Math.abs(error) < Constants.iLimitShoot) {
+        Constants.errorSumShoot += error * dt;
+      }
+      double errorRate = (error - Constants.lastErrorShoot) / dt;
+      double outputSpeed = Constants.kPShoot * error + Constants.kIShoot * Constants.errorSumShoot + Constants.kDShoot * errorRate;
+      cannonMotor.set(-outputSpeed);
+      Constants.lastTimestampShoot = Timer.getFPGATimestamp();
+      Constants.lastErrorShoot = error;
+      System.out.println(sensorPosition);
+    }
+   
+  
+  public void setIntake(){
+    Constants.setpointShoot = -50;
+
+    double sensorPosition = cannonMotor.getSelectedSensorPosition(0) * Constants.kCannonTick2Deg;
+    double error = Constants.setpointShoot - sensorPosition;
+    double dt = Timer.getFPGATimestamp() - Constants.lastTimestampShoot;
+    if (Math.abs(error) < Constants.iLimitShoot) {
+      Constants.errorSumShoot += error * dt;
+    }
+    double errorRate = (error - Constants.lastErrorShoot) / dt;
+    double outputSpeed = Constants.kPShoot * error + Constants.kIShoot * Constants.errorSumShoot + Constants.kDShoot * errorRate;
+    cannonMotor.set(-outputSpeed);
+    Constants.lastTimestampShoot = Timer.getFPGATimestamp();
+    Constants.lastErrorShoot = error;
+    System.out.println(sensorPosition);
+  }
   public void stop(){
     cannonMotor.set(0.0);
   }
