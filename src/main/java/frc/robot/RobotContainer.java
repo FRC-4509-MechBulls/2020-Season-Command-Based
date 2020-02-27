@@ -66,8 +66,11 @@ public class RobotContainer {
         double n = controller2.getTriggerAxis(GenericHID.Hand.kRight) - controller2.getTriggerAxis(GenericHID.Hand.kLeft);
         if(n>0.5){
             n=1.0;
-        } else if(n<0.5){
+        } else if(n<0.5 && n>0){
             n=0.0;
+        }
+        else if(n<0){
+            n=-1.0;
         }
 		return n;
     }
