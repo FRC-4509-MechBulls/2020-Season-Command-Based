@@ -66,14 +66,14 @@ public class RobotContainer {
 	}
     public double getIndex(){
         double n = controller2.getTriggerAxis(GenericHID.Hand.kRight) - controller2.getTriggerAxis(GenericHID.Hand.kLeft);
-        if(n>=0.5){
-            n=1.0;
-        } else if(n<0.5 && n>0){
-            n=0.0;
-        }
-        else if(n<0){
-            n=-1.0;
-        }
+        // if(n>=0.5){
+        //     n=1.0;
+        // } else if(n<0.5 && n>0){
+        //     n=0.0;
+        // }
+        // else if(n<0){
+        //     n=-1.0;
+        // }
 		return n;
     }
     public double getTilt(){
@@ -83,18 +83,13 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //womfButton, climberButton, cannonShoot, cannonIntake, climbModeCannon, cannonTiltIntake, cannonTiltShoot
-        final JoystickButton cannonTiltIntake = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
         final JoystickButton womfButton = new JoystickButton(controller2, XboxController.Button.kX.value);
         final JoystickButton climberButton = new JoystickButton(controller1, XboxController.Button.kBumperRight.value);
         final JoystickButton cannonShoot = new JoystickButton(controller2,  XboxController.Button.kB.value);
-        final JoystickButton climbModeCannon = new JoystickButton(controller1,  XboxController.Button.kBumperLeft.value);
-        final JoystickButton cannonTiltShoot = new JoystickButton(controller2,  XboxController.Button.kA.value);
         final JoystickButton cannonIntake= new JoystickButton(controller2,  XboxController.Button.kBumperRight.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
         womfButton.whenPressed(new ActiveColorCommand(womfSubsystem));
-        cannonTiltShoot.whenPressed(new CannonShootMode(cannonTiltSubsystem));
-        cannonTiltShoot.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
         cannonShoot.whenPressed(new ShooterOnCommand(intakeAndShootSubsystem));
         cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
         cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
