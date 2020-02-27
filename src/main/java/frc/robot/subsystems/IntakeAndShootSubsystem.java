@@ -34,22 +34,16 @@ public class IntakeAndShootSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void enable(double intake, double index, double flywheel) {
+  public void enable(double intake, double flywheel) {
     intakeMotor.set(intake);
-    indexMotor1.set(index);
-    indexMotor2.set(-index);
     flywheel1.set(flywheel);
     flywheel2.set(-flywheel);
 
-    if (intake > 0.0) {
-      Constants.intakeSolenoid.set(true);
-
-    } else {
-      Constants.intakeSolenoid.set(false);
-    }
-
   }
-
+  public void index(double index){
+    indexMotor1.set(index);
+    indexMotor2.set(-index);
+  }
   public void disable(){
     intakeMotor.set(0);
     indexMotor1.set(0);
@@ -58,4 +52,6 @@ public class IntakeAndShootSubsystem extends SubsystemBase {
     flywheel2.set(0.0);
 
   }
+
+
 }
