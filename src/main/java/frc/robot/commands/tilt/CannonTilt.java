@@ -7,10 +7,12 @@
 
 package frc.robot.commands.tilt;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CannonTiltSubsystem;
 
-public class CannonClimbMode extends CommandBase {
+public class CannonTilt extends CommandBase {
   /**
    * Creates a new CannonTiltCommand.
    */
@@ -18,9 +20,11 @@ public class CannonClimbMode extends CommandBase {
    * Creates a new IntakeCommand.
    */
   CannonTiltSubsystem cannonTiltSubsystem;
-  public CannonClimbMode(CannonTiltSubsystem subsystem) {
-    cannonTiltSubsystem = subsystem;
+  DoubleSupplier tilt;
 
+  public CannonTilt(CannonTiltSubsystem subsystem, DoubleSupplier tilt) {
+    cannonTiltSubsystem = subsystem;
+    this.tilt = tilt;
     addRequirements(cannonTiltSubsystem);
 
 
@@ -35,8 +39,7 @@ public class CannonClimbMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.climbMode();
-    // cannonTiltSubsystem.test();
+    cannonTiltSubsystem.manualTilt(tilt.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

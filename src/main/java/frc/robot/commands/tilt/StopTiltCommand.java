@@ -29,7 +29,7 @@ public class StopTiltCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.stop();
+    cannonTiltSubsystem.manualTilt(0);
   }
 
   // Called once the command ends or is interrupted.

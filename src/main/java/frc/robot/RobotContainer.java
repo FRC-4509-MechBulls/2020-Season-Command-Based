@@ -10,10 +10,8 @@ import frc.robot.commands.index.IndexCommand;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeOffCommand;
 import frc.robot.commands.shooter.ShooterOnCommand;
-import frc.robot.commands.tilt.CannonClimbMode;
-import frc.robot.commands.tilt.CannonIntakeMode;
 import frc.robot.commands.tilt.CannonShootMode;
-import frc.robot.commands.tilt.CannonWomfMode;
+import frc.robot.commands.tilt.CannonTilt;
 import frc.robot.commands.tilt.StopTiltCommand;
 import frc.robot.commands.womf.ActiveColorCommand;
 import frc.robot.commands.womf.InactiveColorCommand;
@@ -49,6 +47,10 @@ public class RobotContainer {
             new IndexCommand(
                 intakeAndShootSubsystem,
                 () -> getIndex()));
+        cannonTiltSubsystem.setDefaultCommand(
+            new CannonTilt(
+                cannonTiltSubsystem,
+                () -> getTilt()));
         
 
        
@@ -64,7 +66,7 @@ public class RobotContainer {
 	}
     public double getIndex(){
         double n = controller2.getTriggerAxis(GenericHID.Hand.kRight) - controller2.getTriggerAxis(GenericHID.Hand.kLeft);
-        if(n>0.5){
+        if(n>=0.5){
             n=1.0;
         } else if(n<0.5 && n>0){
             n=0.0;
@@ -74,7 +76,10 @@ public class RobotContainer {
         }
 		return n;
     }
-
+    public double getTilt(){
+        double n = controller2.getY(GenericHID.Hand.kLeft);
+		return Math.abs(n) < 0.1 ? 0 : n;
+    }
 
     private void configureButtonBindings() {
         //womfButton, climberButton, cannonShoot, cannonIntake, climbModeCannon, cannonTiltIntake, cannonTiltShoot
@@ -87,18 +92,13 @@ public class RobotContainer {
         final JoystickButton cannonIntake= new JoystickButton(controller2,  XboxController.Button.kBumperRight.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
-        womfButton.whenPressed(new ActiveColorCommand(womfSubsystem).alongWith(new CannonWomfMode(cannonTiltSubsystem)));
-        cannonTiltIntake.whenPressed(new CannonIntakeMode(cannonTiltSubsystem));
-        cannonTiltIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
-        climbModeCannon.whenPressed(new CannonClimbMode(cannonTiltSubsystem));
-        climbModeCannon.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
-        womfButton.whenReleased(new InactiveColorCommand(womfSubsystem).alongWith(new StopTiltCommand(cannonTiltSubsystem)));
+        womfButton.whenPressed(new ActiveColorCommand(womfSubsystem));
         cannonTiltShoot.whenPressed(new CannonShootMode(cannonTiltSubsystem));
         cannonTiltShoot.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
         cannonShoot.whenPressed(new ShooterOnCommand(intakeAndShootSubsystem));
         cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
         cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
-        cannonIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new IntakeOffCommand(intakeAndShootSubsystem)));
+        cannonIntake.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
 
 
     }

@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -24,7 +26,6 @@ public class CannonTiltSubsystem extends SubsystemBase {
   double lastTimestamp = 0;
   double lastError = 0;
   public CannonTiltSubsystem() {
-
   }
   public void init(){
     errorSum = 0;
@@ -45,6 +46,9 @@ public class CannonTiltSubsystem extends SubsystemBase {
     cannonMotor.configReverseSoftLimitThreshold((int) (0 / Constants.kTick2Feet4Womf), 10);
     cannonMotor.configForwardSoftLimitThreshold((int) (175 / Constants.kTick2Feet4Womf), 10);
     
+  }
+  public void manualTilt(double n){
+    cannonMotor.set(n);
   }
   public void shootMode(){
     
@@ -135,9 +139,7 @@ public class CannonTiltSubsystem extends SubsystemBase {
   public void stop(){
     cannonMotor.set(0.0);
   }
-  public void test(){
-    cannonMotor.set(-.35);
-  }
+
   // @Override
   // public void periodic() {
   //   // This method will be called once per scheduler run
