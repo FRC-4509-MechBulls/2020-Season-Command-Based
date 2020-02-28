@@ -84,6 +84,7 @@ public class RobotContainer {
         shooterIndexer.whenPressed(new IndexShooterCommand(intakeAndShootSubsystem));
         shooterIndexer.whenReleased(new StopIndexCommand(intakeAndShootSubsystem));
         womfButton.whenPressed(new ActiveColorCommand(womfSubsystem));
+        womfButton.whenReleased(new InactiveColorCommand(womfSubsystem));
         cannonShoot.whenPressed(new ShooterOnCommand(intakeAndShootSubsystem));
         cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
         cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
