@@ -5,20 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.tilt;
+package frc.robot.commands.index;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CannonTiltSubsystem;
+import frc.robot.subsystems.IntakeAndShootSubsystem;
 
-public class StopTiltCommand extends CommandBase {
+public class IndexShooterCommand extends CommandBase {
   /**
-   * Creates a new StopTiltCommand.
+   * Creates a new IndexShooterCommand.
    */
-  CannonTiltSubsystem cannonTiltSubsystem = new CannonTiltSubsystem();
-  public StopTiltCommand(CannonTiltSubsystem subsystem) {
-    cannonTiltSubsystem = subsystem;
+  IntakeAndShootSubsystem intakeAndShootSubsystem;
+  public IndexShooterCommand(IntakeAndShootSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(cannonTiltSubsystem);
+    intakeAndShootSubsystem = subsystem;
+    addRequirements(intakeAndShootSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +29,9 @@ public class StopTiltCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    cannonTiltSubsystem.manualTilt(0);
+    intakeAndShootSubsystem.index(-1.0);
   }
+
 
   // Called once the command ends or is interrupted.
   @Override

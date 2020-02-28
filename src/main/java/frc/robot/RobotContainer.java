@@ -6,13 +6,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.ClimberCommand;
 import frc.robot.commands.climber.TurnOffClimberCommand;
 import frc.robot.commands.driving.DirectDriveCommand;
+import frc.robot.commands.index.IndexIntakeCommand;
+import frc.robot.commands.index.IndexShooterCommand;
+import frc.robot.commands.index.StopIndexCommand;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.IntakeOffCommand;
 import frc.robot.commands.shooter.ShooterOnCommand;
-import frc.robot.commands.tilt.CannonClimbMode;
-import frc.robot.commands.tilt.CannonIntakeMode;
 import frc.robot.commands.tilt.CannonShootMode;
-import frc.robot.commands.tilt.CannonWomfMode;
+import frc.robot.commands.tilt.CannonTilt;
 import frc.robot.commands.tilt.StopTiltCommand;
 import frc.robot.commands.womf.ActiveColorCommand;
 import frc.robot.commands.womf.InactiveColorCommand;
@@ -44,7 +45,10 @@ public class RobotContainer {
                 drivingSubsystem,
                 () -> getDrive(),
                 () -> getTurn()));
-
+        cannonTiltSubsystem.setDefaultCommand(
+            new CannonTilt(
+                cannonTiltSubsystem,
+                () -> getTilt()));
         
 
        
@@ -58,33 +62,33 @@ public class RobotContainer {
 		double n = controller1.getTriggerAxis(GenericHID.Hand.kRight) - controller1.getTriggerAxis(GenericHID.Hand.kLeft);
 		return Math.abs(n) < 0.1 ? 0 : n;
 	}
-    
 
+    public double getTilt(){
+        double n = controller2.getY(GenericHID.Hand.kLeft);
+		return Math.abs(n) < 0.1 ? 0 : n;
+    }
 
     private void configureButtonBindings() {
-        final JoystickButton colorButton = new JoystickButton(controller2, XboxController.Button.kBumperLeft.value);
+        //womfButton, climberButton, cannonShoot, cannonIntake, climbModeCannon, cannonTiltIntake, cannonTiltShoot
+        final JoystickButton womfButton = new JoystickButton(controller2, XboxController.Button.kX.value);
+        final JoystickButton climberButton = new JoystickButton(controller2, XboxController.Button.kY.value);
+        final JoystickButton cannonShoot = new JoystickButton(controller2,  XboxController.Button.kBumperLeft.value);
+        final JoystickButton cannonIntake= new JoystickButton(controller2,  XboxController.Button.kBumperRight.value);
+        final JoystickButton intakeIndexer= new JoystickButton(controller2,  XboxController.Button.kB.value);
+        final JoystickButton shooterIndexer = new JoystickButton(controller2, XboxController.Button.kA.value);
 
-        final JoystickButton climberButton = new JoystickButton(controller1, XboxController.Button.kX.value);
-        final JoystickButton cannonShoot = new JoystickButton(controller2,  XboxController.Button.kX.value);
-        final JoystickButton cannonIntake = new JoystickButton(controller2,  XboxController.Button.kY.value);
-        final JoystickButton climbModeCannon = new JoystickButton(controller2,  XboxController.Button.kB.value);
-        final JoystickButton intakeCannon = new JoystickButton(controller2,  XboxController.Button.kA.value);
-
-        final JoystickButton cannonTilt= new JoystickButton(controller2,  XboxController.Button.kBumperRight.value);
         climberButton.whenPressed(new ClimberCommand(climberSubsystem));
         climberButton.whenReleased(new TurnOffClimberCommand(climberSubsystem));
-        colorButton.whenPressed(new ActiveColorCommand(womfSubsystem).alongWith(new CannonWomfMode(cannonTiltSubsystem)));
-        intakeCannon.whenPressed(new CannonIntakeMode(cannonTiltSubsystem));
-        intakeCannon.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
-        climbModeCannon.whenPressed(new CannonClimbMode(cannonTiltSubsystem));
-        climbModeCannon.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
-        colorButton.whenReleased(new InactiveColorCommand(womfSubsystem).alongWith(new StopTiltCommand(cannonTiltSubsystem)));
-        cannonTilt.whenPressed(new CannonShootMode(cannonTiltSubsystem));
-        cannonTilt.whenReleased(new StopTiltCommand(cannonTiltSubsystem));
+        intakeIndexer.whenPressed(new IndexIntakeCommand(intakeAndShootSubsystem));
+        intakeIndexer.whenReleased(new StopIndexCommand(intakeAndShootSubsystem));
+        shooterIndexer.whenPressed(new IndexShooterCommand(intakeAndShootSubsystem));
+        shooterIndexer.whenReleased(new StopIndexCommand(intakeAndShootSubsystem));
+        womfButton.whenPressed(new ActiveColorCommand(womfSubsystem));
+        womfButton.whenReleased(new InactiveColorCommand(womfSubsystem));
         cannonShoot.whenPressed(new ShooterOnCommand(intakeAndShootSubsystem));
         cannonShoot.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
         cannonIntake.whenPressed(new IntakeCommand(intakeAndShootSubsystem));
-        cannonIntake.whenReleased(new StopTiltCommand(cannonTiltSubsystem).alongWith(new IntakeOffCommand(intakeAndShootSubsystem)));
+        cannonIntake.whenReleased(new IntakeOffCommand(intakeAndShootSubsystem));
 
 
     }
