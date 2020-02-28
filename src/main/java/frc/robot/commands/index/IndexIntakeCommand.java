@@ -7,20 +7,17 @@
 
 package frc.robot.commands.index;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeAndShootSubsystem;
 
-public class IndexCommand extends CommandBase {
+public class IndexIntakeCommand extends CommandBase {
   /**
-   * Creates a new IndexCommand.
+   * Creates a new IndexIntakeCommand.
    */
   IntakeAndShootSubsystem intakeAndShootSubsystem;
-  DoubleSupplier indexValue;
-  public IndexCommand(IntakeAndShootSubsystem subsystem, DoubleSupplier indexValue) {
+  public IndexIntakeCommand(IntakeAndShootSubsystem subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     intakeAndShootSubsystem = subsystem;
-    this.indexValue = indexValue;
     addRequirements(intakeAndShootSubsystem);
   }
 
@@ -32,7 +29,7 @@ public class IndexCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeAndShootSubsystem.index(indexValue.getAsDouble());
+    intakeAndShootSubsystem.index(1.0);
   }
 
   // Called once the command ends or is interrupted.
